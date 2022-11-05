@@ -1,0 +1,77 @@
+---
+// @see https://www.codegrid.net/articles/2020-css-before-after-1/
+
+import { CSSDirection, CSSLength } from "@/types/css"
+
+interface Arrow {
+  to: CSSDirection
+  color?: string
+  height?: CSSLength
+  baseW?: CSSLength
+}
+
+interface Props {
+  arrow: Arrow
+}
+
+const { arrow } = Astro.props
+
+const arrcolor = arrow.color ?? "currentColor"
+const arrheight = arrow.height ?? "12px"
+const arrbaseW = arrow.baseW ?? "16px"
+const arrright = "10px"
+---
+
+<a class={`with-${arrow.to}-arrow`}>リンク</a>
+
+<style define:vars={{ arrheight, arrbaseW, arrright, arrcolor }}>
+  .with-top-arrow,
+  .with-bottom-arrow,
+  .with-left-arrow,
+  .with-right-arrow {
+    --arrbaseHalfW: calc(var(--arrbaseW) / 2);
+
+    display: block;
+    position: relative;
+  }
+
+  .with-top-arrow::before,
+  .with-bottom-arrow::before,
+  .with-left-arrow::before,
+  .with-right-arrow::before {
+    content: "";
+    position: absolute;
+    /* 上下中央に配置するため、底辺の半分を引く */
+    top: calc(50% - var(--arrbaseHalfW));
+    right: var(--arrright);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: var(--arrbaseHalfW);
+    border-color: transparent;
+  }
+
+  .with-right-arrow::before {
+    border-right-width: 0;
+    border-left-width: var(--arrheight);
+    border-left-color: var(--arrcolor);
+  }
+
+  .with-left-arrow::before {
+    border-left-width: 0;
+    border-right-width: var(--arrheight);
+    border-right-color: var(--arrcolor);
+  }
+
+  .with-top-arrow::before {
+    border-top-width: 0;
+    border-bottom-width: var(--arrheight);
+    border-bottom-color: var(--arrcolor);
+  }
+
+  .with-bottom-arrow::before {
+    border-bottom-width: 0;
+    border-top-width: var(--arrheight);
+    border-top-color: var(--arrcolor);
+  }
+</style>
