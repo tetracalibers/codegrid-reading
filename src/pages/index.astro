@@ -1,4 +1,5 @@
 ---
+import AnimateShadowBox from "@/components/animate-shadow-box.astro"
 import AnimateUnderlineLink from "@/components/animate-underline-link.astro"
 import ArrowLink from "@/components/arrow-link.astro"
 import HLineHeading from "@/components/horizontal-line-heading.astro"
@@ -36,6 +37,13 @@ import HLineHeading from "@/components/horizontal-line-heading.astro"
         animation={{ from: "center" }}
       />
       <AnimateUnderlineLink text="左から伸びる" animation={{ from: "left" }} />
+    </section>
+    <section>
+      <h1>::beforeで軽量shadowアニメーション</h1>
+      <AnimateShadowBox>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quia
+        molestias ipsam mollitia similique rerum amet obcaecati vitae
+      </AnimateShadowBox>
     </section>
   </body>
 </html>

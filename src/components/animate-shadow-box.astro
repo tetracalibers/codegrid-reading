@@ -1,0 +1,39 @@
+---
+// @see https://www.codegrid.net/articles/2020-css-before-after-3/#toc-3
+
+interface Props {
+  as?: keyof HTMLElementTagNameMap
+}
+
+const { as, ...props } = Astro.props
+
+const Element = as ?? "div"
+---
+
+<Element {...props} class:list={[props.class, "animate-shadow"]}>
+  <slot />
+</Element>
+
+<style>
+  .animate-shadow {
+    position: relative;
+  }
+
+  /** 影だけ */
+  .animate-shadow::before {
+    content: "";
+    pointer-events: none;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.5s;
+  }
+  .animate-shadow:hover::before {
+    opacity: 1;
+  }
+</style>
