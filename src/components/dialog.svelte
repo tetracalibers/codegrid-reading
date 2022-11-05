@@ -16,14 +16,26 @@
     // 2回目以降もアニメーションされるようになる
     closing = true
   }
+  const judgeOutsideClick = (e: MouseEvent | TouchEvent) => {
+    if (e.target === dialogel) {
+      close()
+    }
+  }
 </script>
 
-<dialog bind:this={dialogel} class={closing ? "--closing" : ""}>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quia
-    molestias ipsam mollitia similique rerum amet obcaecati vitae
-  </p>
-  <button on:click={close}>Close</button>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<dialog
+  bind:this={dialogel}
+  class={closing ? "--closing" : ""}
+  on:click={judgeOutsideClick}
+>
+  <div class="modal__inner">
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quia
+      molestias ipsam mollitia similique rerum amet obcaecati vitae
+    </p>
+    <button on:click={close}>Close</button>
+  </div>
 </dialog>
 
 <button on:click={open}> Open </button>
@@ -39,8 +51,9 @@
     box-sizing: border-box;
     width: calc(100vw - 32px);
     max-width: 640px;
-    padding: 16px;
     border: 0;
+    /** innerを広げるためにpaddingは消しておく */
+    padding: 0;
     /** ぬるっと現れる */
     transition: opacity 0.5s, transform 0.5s;
   }
@@ -54,5 +67,11 @@
     background: #000;
     /** fadeIn */
     transition: opacity 0.5s;
+  }
+
+  /** 背景クリックで閉じるために、内部コンテンツを囲んで全面に広げる */
+  .modal__inner {
+    /** paddingはinnerに指定 */
+    padding: 16px;
   }
 </style>
