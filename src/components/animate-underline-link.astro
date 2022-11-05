@@ -1,0 +1,49 @@
+---
+// @see https://www.codegrid.net/articles/2020-css-before-after-3
+
+interface AnimationOptions {
+  from: "center" | "left"
+  duration?: number
+}
+
+interface Props {
+  text: string
+  animation: AnimationOptions
+}
+
+const { text, animation } = Astro.props
+const duration = animation.duration ? `${animation.duration}s` : "0.2s"
+---
+
+<a class={`animate-underline --from-${animation.from}`}>{text}</a>
+
+<style define:vars={{ duration }}>
+  .animate-underline {
+    position: relative;
+  }
+
+  .animate-underline::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 2px;
+    background: currentColor;
+    /** アニメーション */
+    transform: scaleX(0);
+    transition: transform var(--duration);
+  }
+  .animate-underline:hover::before {
+    transform: scaleX(1);
+  }
+
+  /** from left */
+  .animate-underline.--from-left {
+    transform-origin: 100% 0;
+  }
+  .animate-underline.--from-left:hover::before {
+    transform-origin: 0 0;
+  }
+</style>

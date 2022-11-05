@@ -1,4 +1,5 @@
 ---
+import AnimateUnderlineLink from "@/components/animate-underline-link.astro"
 import ArrowLink from "@/components/arrow-link.astro"
 import HLineHeading from "@/components/horizontal-line-heading.astro"
 ---
@@ -27,6 +28,14 @@ import HLineHeading from "@/components/horizontal-line-heading.astro"
       <HLineHeading level={4} text="見出しh4" />
       <HLineHeading level={5} text="見出しh5" />
       <HLineHeading level={6} text="見出しh6" />
+    </section>
+    <section>
+      <h1>::beforeで下線アニメーション</h1>
+      <AnimateUnderlineLink
+        text="中央から伸びる"
+        animation={{ from: "center" }}
+      />
+      <AnimateUnderlineLink text="左から伸びる" animation={{ from: "left" }} />
     </section>
   </body>
 </html>
