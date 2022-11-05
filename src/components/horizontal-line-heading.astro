@@ -1,0 +1,37 @@
+---
+interface Props {
+  level: 1 | 2 | 3 | 4 | 5 | 6
+  text: string
+}
+
+const { level, text } = Astro.props
+const Heading = `h${level}` as any
+---
+
+<Heading class="heading">{text}</Heading>
+
+<style>
+  .heading {
+    display: flex;
+    align-items: center;
+  }
+
+  .heading::before,
+  .heading::after {
+    content: "";
+    /** 幅は余白全て */
+    flex-grow: 1;
+    /** 線の太さ */
+    height: 1px;
+    /** 線の色 */
+    background: currentColor;
+  }
+
+  .heading::before {
+    margin-right: 5px;
+  }
+
+  .heading::after {
+    margin-left: 5px;
+  }
+</style>

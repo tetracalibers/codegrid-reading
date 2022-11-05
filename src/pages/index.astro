@@ -1,5 +1,6 @@
 ---
 import ArrowLink from "@/components/arrow-link.astro"
+import HLineHeading from "@/components/horizontal-line-heading.astro"
 ---
 
 <html lang="en">
@@ -17,6 +18,15 @@ import ArrowLink from "@/components/arrow-link.astro"
       <ArrowLink arrow={{ to: "left" }} />
       <ArrowLink arrow={{ to: "top" }} />
       <ArrowLink arrow={{ to: "bottom" }} />
+    </section>
+    <section>
+      <h1>::beforeと::afterで左右線付き見出しをつくる</h1>
+      <HLineHeading level={1} text="見出しh1" />
+      <HLineHeading level={2} text="見出しh2" />
+      <HLineHeading level={3} text="見出しh3" />
+      <HLineHeading level={4} text="見出しh4" />
+      <HLineHeading level={5} text="見出しh5" />
+      <HLineHeading level={6} text="見出しh6" />
     </section>
   </body>
 </html>
