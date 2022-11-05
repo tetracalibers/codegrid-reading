@@ -2,6 +2,7 @@
 import AnimateShadowBox from "@/components/animate-shadow-box.astro"
 import AnimateUnderlineLink from "@/components/animate-underline-link.astro"
 import ArrowLink from "@/components/arrow-link.astro"
+import Dialog from "@/components/dialog.svelte"
 import HLineHeading from "@/components/horizontal-line-heading.astro"
 ---
 
@@ -44,6 +45,10 @@ import HLineHeading from "@/components/horizontal-line-heading.astro"
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quia
         molestias ipsam mollitia similique rerum amet obcaecati vitae
       </AnimateShadowBox>
+    </section>
+    <section>
+      <h1>dialog要素によるモーダルダイアログ</h1>
+      <Dialog client:load />
     </section>
   </body>
 </html>
