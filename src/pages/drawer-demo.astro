@@ -1,0 +1,39 @@
+---
+import DrawerNav from "@/components/drawer-demo/drawer-nav.svelte"
+
+const navLinks = [...new Array(100)].map((_, i) => ({
+  href: "#",
+  label: `アイテム${i + 1}`,
+}))
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <DrawerNav client:load>
+      <ul class="nav-list">
+        {
+          navLinks.map(link => (
+            <li class="nav-list-item">
+              <a href={link.href} class="nav-list-item__link">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </DrawerNav>
+    <div class="content"></div>
+    <style>
+      .content {
+        height: 200vh;
+      }
+    </style>
+  </body>
+</html>

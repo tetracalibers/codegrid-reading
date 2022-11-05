@@ -1,8 +1,15 @@
 <script lang="ts">
-  export let opened
+  export let opened: boolean
+  export let navid: string
 </script>
 
-<button on:click class="burger-btn" type="button" aria-expanded={opened}>
+<button
+  on:click
+  class="burger-btn"
+  type="button"
+  aria-expanded={opened}
+  aria-controls={navid}
+>
   <div class="burger-btn-icon">
     <span class="burger-btn-icon__line --line-1" />
     <span class="burger-btn-icon__line --line-2" />
