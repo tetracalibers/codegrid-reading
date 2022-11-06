@@ -1,5 +1,6 @@
 ---
 import DrawerNav from "@/components/drawer-demo/drawer-nav.svelte"
+import MainContent from "@/components/drawer-demo/main-content.astro"
 
 const navLinks = [...new Array(100)].map((_, i) => ({
   href: "#",
@@ -29,13 +30,10 @@ const navLinks = [...new Array(100)].map((_, i) => ({
         }
       </ul>
     </DrawerNav>
-    <div class="content">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quia
-      molestias ipsam mollitia similique rerum amet obcaecati vitae
-    </div>
-    <style>
-      .content {
-        height: 200vh;
+    <MainContent />
+    <style is:global>
+      :focus {
+        outline: 3px solid tomato;
       }
     </style>
   </body>
