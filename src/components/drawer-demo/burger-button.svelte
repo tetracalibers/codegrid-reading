@@ -50,6 +50,7 @@
   .burger-btn-icon__line {
     --line-pos: calc(var(--space-y) + (var(--lineH) + var(--gap)) * var(--idx));
     position: absolute;
+    top: var(--line-pos);
     left: var(--space-x);
     height: var(--lineH);
     border-radius: 2px;
@@ -61,22 +62,18 @@
 
   .burger-btn-icon__line.--line-1 {
     --idx: 0;
-    top: var(--line-pos);
   }
 
   .burger-btn-icon__line.--line-2 {
     --idx: 1;
-    top: var(--line-pos);
   }
 
   .burger-btn-icon__line.--line-3 {
     --idx: 2;
-    top: var(--line-pos);
   }
 
   .burger-btn[aria-expanded="true"] .burger-btn-icon__line.--line-1 {
     --idx: 1;
-    top: var(--line-pos);
     transform: rotate(-45deg);
   }
 
@@ -86,7 +83,6 @@
 
   .burger-btn[aria-expanded="true"] .burger-btn-icon__line.--line-3 {
     --idx: 1;
-    top: var(--line-pos);
     transform: rotate(45deg);
   }
 </style>
