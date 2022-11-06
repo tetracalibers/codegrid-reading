@@ -1,21 +1,89 @@
 <script lang="ts">
   import BurgerButton from "@/components/drawer-demo/burger-button.svelte"
+  import { onMount } from "svelte"
+
+  let rootel: HTMLElement
+  let bodyel: HTMLElement
+  let drawerel: HTMLDivElement
+  let scrollbarW: number
+
+  const scrollLockModifier = "scroll-lock"
+
+  const activeScrollLock = () => {
+    rootel.classList.add(scrollLockModifier)
+    bodyel.classList.add(scrollLockModifier)
+  }
+  const deactiveScrollLock = () => {
+    rootel.classList.remove(scrollLockModifier)
+    bodyel.classList.remove(scrollLockModifier)
+  }
 
   let opened = false
-  const toggle = () => (opened = !opened)
+  const toggle = () => {
+    if (!opened) activeScrollLock()
+    opened = !opened
+  }
+
+  const onTransitionDrawer = (e: TransitionEvent) => {
+    if (e.target === drawerel || e.propertyName === "visibility") return
+    if (!opened) deactiveScrollLock()
+  }
+
+  onMount(() => {
+    rootel = document.documentElement
+    bodyel = document.body
+    drawerel.addEventListener("transitionend", onTransitionDrawer, false)
+
+    const resizeObserver = new ResizeObserver(e => {
+      if (opened) return
+      scrollbarW = window.innerWidth - rootel.clientWidth
+      rootel.style.setProperty("--scrollbar-w", scrollbarW + "px")
+    })
+    resizeObserver.observe(rootel)
+
+    return () => {
+      drawerel.removeEventListener("transitionend", onTransitionDrawer, false)
+      resizeObserver.unobserve(rootel)
+    }
+  })
 </script>
 
-<div class="trigger-button">
+<div class="trigger-button fix-scrollbar-gutter">
   <BurgerButton {opened} on:click={toggle} navid="drawer" />
 </div>
-<div class="drawer" id="drawer" aria-expanded={opened}>
+<div
+  class="drawer fix-scrollbar-gutter"
+  id="drawer"
+  aria-expanded={opened}
+  bind:this={drawerel}
+>
   <div class="drawer-backdrop" />
-  <nav class="drawer-nav nav">
+  <nav class="drawer-nav nav remove-scrollbar-margin">
     <slot />
   </nav>
 </div>
 
 <style>
+  :global(html) {
+    overflow-y: scroll;
+  }
+
+  :global(body) {
+    margin: 0;
+  }
+
+  :global(.scroll-lock) {
+    overflow: hidden;
+  }
+
+  :global(html.scroll-lock .fix-scrollbar-gutter) {
+    margin-right: var(--scrollbar-w);
+  }
+
+  :global(html.scroll-lock .remove-scrollbar-margin) {
+    margin-right: calc(-1 * var(--scrollbar-w));
+  }
+
   .trigger-button {
     position: fixed;
     z-index: 9999; /*ボタンを最前面に*/
@@ -28,7 +96,7 @@
     z-index: 0;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     height: 100%;
   }
 
