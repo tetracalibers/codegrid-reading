@@ -1,10 +1,12 @@
 <script lang="ts">
   export let opened: boolean
   export let navid: string
+  export let el: HTMLButtonElement
 </script>
 
 <button
   on:click
+  bind:this={el}
   class="burger-btn"
   type="button"
   aria-expanded={opened}
@@ -32,7 +34,6 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    outline: none;
     padding: 0;
     appearance: none;
     font-size: 1rem;
