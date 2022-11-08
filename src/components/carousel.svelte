@@ -49,14 +49,26 @@
 </script>
 
 <div class="carousel">
-  <div class="carousel-visible">
-    <div class="carousel-slide" style={`--slide-offset: ${offset}%`}>
-      <slot />
+  <div class="carousel-content">
+    <div class="carousel-visible">
+      <div class="carousel-slide" style={`--slide-offset: ${offset}%`}>
+        <slot />
+      </div>
     </div>
-  </div>
-  <div class="carousel-buttons">
-    <button on:click={onClickPrevButton}>Prev</button>
-    <button on:click={onClickNextButton}>Next</button>
+    <div class="carousel-prev-next">
+      <button
+        class="carousel-prev-next__button --prev"
+        on:click={onClickPrevButton}
+      >
+        <span class="visually-hidden">Prev</span>
+      </button>
+      <button
+        class="carousel-prev-next__button --next"
+        on:click={onClickNextButton}
+      >
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   </div>
   <ul class="carousel-indicator">
     {#each [...new Array(count)] as _, i}
@@ -76,10 +88,33 @@
 </div>
 
 <style>
-  /** 見える範囲 */
+  /** Base rule */
+  button {
+    appearance: none;
+    border: none;
+    padding: 0;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
+
+  /** Utility */
+  .visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
   .carousel {
   }
 
+  /** 見える範囲 */
   .carousel-visible {
     overflow: hidden;
     padding: 2.5%;
@@ -104,6 +139,40 @@
     flex-basis: 100%;
   }
 
+  .carousel-content {
+    position: relative;
+  }
+
+  .carousel-prev-next__button {
+    --arrow-color: #ff8aae;
+    --arrow-color--hover: #ecc5fb;
+    width: 1.25rem;
+    height: 1.25rem;
+    position: absolute;
+    top: 50%;
+    border-top: 3px solid var(--arrow-color);
+    border-right: 3px solid var(--arrow-color);
+    transform: translateY(-50%) rotate(var(--rotate));
+    background-color: transparent;
+  }
+
+  .carousel-prev-next__button.--prev {
+    --rotate: -135deg;
+    left: 0;
+  }
+
+  .carousel-prev-next__button.--next {
+    --rotate: 45deg;
+    right: 0;
+  }
+
+  .carousel-prev-next__button:hover,
+  .carousel-prev-next__button:focus,
+  .carousel-prev-next__button:active {
+    border-top-color: var(--arrow-color--hover);
+    border-right-color: var(--arrow-color--hover);
+  }
+
   .carousel-indicator {
     display: flex;
     list-style: none;
@@ -123,14 +192,7 @@
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    appearance: none;
-    border: none;
-    padding: 0;
     background-color: #eef1ff;
-  }
-
-  .carousel-indicator__button:hover {
-    cursor: pointer;
   }
 
   .carousel-indicator__button:hover,
@@ -138,16 +200,5 @@
   .carousel-indicator__button:active,
   .carousel-indicator__button.--active {
     background-color: #b1afff;
-  }
-
-  .visually-hidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
   }
 </style>
