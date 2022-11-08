@@ -1,0 +1,33 @@
+---
+interface Props {
+  maxOriginal?: boolean
+  src: string
+  alt: string
+}
+
+const { maxOriginal = false, ...props } = Astro.props
+---
+
+<img
+  {...props}
+  class:list={[
+    props.class,
+    "fluid-img",
+    maxOriginal ? "--max-full-w" : "--full-w",
+  ]}
+/>
+
+<style>
+  .fluid-img {
+    /** アスペクト比の維持 */
+    height: auto;
+  }
+
+  .fluid-img.--max-full-w {
+    max-width: 100%;
+  }
+
+  .fluid-img.--full-w {
+    width: 100%;
+  }
+</style>

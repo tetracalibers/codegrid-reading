@@ -3,8 +3,7 @@ import AnimateShadowBox from "@/components/animate-shadow-box.astro"
 import AnimateUnderlineLink from "@/components/animate-underline-link.astro"
 import ArrowLink from "@/components/arrow-link.astro"
 import Dialog from "@/components/dialog.svelte"
-import BurgerButton from "@/components/drawer-demo/burger-button.svelte"
-import DrawerNav from "@/components/drawer-demo/drawer-nav.svelte"
+import FluidImage from "@/components/fluid-image.astro"
 import HLineHeading from "@/components/horizontal-line-heading.astro"
 ---
 
@@ -55,6 +54,15 @@ import HLineHeading from "@/components/horizontal-line-heading.astro"
     <section>
       <h1>ハンバーガーボタン</h1>
       <a href="/drawer-demo">デモページ</a>
+    </section>
+    <section>
+      <h1>フルードイメージ化</h1>
+      <FluidImage src="/images/cropped-tomixy-300x300.jpg" alt="数学" />
+      <FluidImage
+        src="/images/cropped-tomixy-300x300.jpg"
+        alt="数学"
+        maxOriginal
+      />
     </section>
   </body>
 </html>
