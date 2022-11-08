@@ -1,0 +1,21 @@
+---
+interface Props {
+  columnCount: number
+  class?: string
+}
+
+const { columnCount, ...props } = Astro.props
+---
+
+<p class:list={[props.class, "multi-column"]}>
+  <slot />
+</p>
+
+<style define:vars={{ columnCount }}>
+  .multi-column {
+    column-count: var(--columnCount);
+    column-gap: 30px;
+    /** 200px以上の余白があれば、新しく段組みを作る */
+    column-width: 200px;
+  }
+</style>
