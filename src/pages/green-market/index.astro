@@ -1,0 +1,120 @@
+---
+import HtmlBase from "@/components/green-market/html-base.astro"
+---
+
+<HtmlBase>
+  <div class="gm-grid">
+    <div class="gm-grid__item gm-grid__header">
+      <h1>header</h1>
+      <ul>
+        <li>ヘッダ</li>
+        <li>虫眼鏡マークをクリックすると検索窓が伸びて出現</li>
+        <li>写真付き上ナビドロップダウン &lt;-&gt; ハンバーガーメニュー</li>
+      </ul>
+    </div>
+    <div class="gm-grid__item gm-grid__hero">
+      <h1>hero</h1>
+      <ul>
+        <li>見出し</li>
+        <li>複数画像を中央に注目させて見せる</li>
+      </ul>
+    </div>
+    <div class="gm-grid__item gm-grid__popularity">
+      <h1>ranking</h1>
+      <ul>
+        <li>見出し</li>
+        <li>カード型レイアウト</li>
+      </ul>
+    </div>
+    <div class="gm-grid__item gm-grid__latest">
+      <h1>new items</h1>
+      <ul>
+        <li>見出し</li>
+        <li>サムネイルをクリックするとメイン画像が切り替わる</li>
+      </ul>
+    </div>
+    <div class="gm-grid__item gm-grid__news">
+      <h1>news</h1>
+      <ul>
+        <li>任意の場所をクリックすると隠れていた内容が開く</li>
+      </ul>
+    </div>
+    <div class="gm-grid__item gm-grid__side">
+      <h1>side</h1>
+      <ul>
+        <li>円が縮小して押し込まれるボタン</li>
+        <li>文章やボタンにカーソルを合わせると補足情報が表示される</li>
+        <li>タブメニュー</li>
+      </ul>
+    </div>
+    <div class="gm-grid__item gm-grid__footer">
+      <h1>footer</h1>
+      <ul>
+        <li>横並びから縦並びへ</li>
+      </ul>
+    </div>
+  </div>
+</HtmlBase>
+
+<style>
+  .gm-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-areas:
+      "header header header"
+      "hero hero hero"
+      "popularity popularity side"
+      "latest latest side"
+      "news news side"
+      "footer footer footer";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr 250px 1fr;
+  }
+
+  .gm-grid__item {
+    background-color: #b8e8fc;
+  }
+
+  .gm-grid__header {
+    grid-area: header;
+  }
+
+  .gm-grid__hero {
+    grid-area: hero;
+  }
+
+  .gm-grid__popularity {
+    grid-area: popularity;
+  }
+
+  .gm-grid__latest {
+    grid-area: latest;
+  }
+
+  .gm-grid__news {
+    grid-area: news;
+  }
+
+  .gm-grid__side {
+    grid-area: side;
+  }
+
+  .gm-grid__footer {
+    grid-area: footer;
+  }
+
+  @media screen and (max-width: 1020px) {
+    .gm-grid {
+      grid-template-areas:
+        "header"
+        "hero"
+        "popularity"
+        "latest"
+        "news"
+        "side"
+        "footer";
+      grid-template-rows: auto;
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
