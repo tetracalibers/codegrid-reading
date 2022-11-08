@@ -1,57 +1,135 @@
 <script lang="ts">
-  const counter = (limit: number) => {
-    let count = 0
-    return (move: "prev" | "next" | number) => {
-      if (move === "prev") count -= 1
-      if (move === "next") count += 1
-      if (typeof move === "number") count = move
-      if (!(count < limit)) {
-        count = 0
-      }
-      if (count < 0) {
-        count = limit - 1
-      }
-      return count
+  /** スワイプ動作がパネルの20%を移動させたら遷移判定をする（閾値） */
+  const SWIPE_THRESHOLD = 0.2
+  const SWIPE_DURATION = 0
+  const SLIDE_DURATION = 0.2
+
+  export let count: number
+  let containerEl: HTMLDivElement
+  let currIdx = 0
+  let slideOffset = "0%"
+  let swipeOffset = "0px"
+  let duration = 0.2
+  let pointer = {
+    startX: 0,
+    moveX: 0,
+    hold: false,
+  }
+
+  const calcMovedIdx = (move: "prev" | "next" | number) => {
+    let idx = currIdx
+    if (move === "prev") idx -= 1
+    if (move === "next") idx += 1
+    if (typeof move === "number") idx = move
+    if (!(idx < count)) {
+      idx = 0
     }
+    if (currIdx < 0) {
+      idx = count - 1
+    }
+    return idx
   }
 
   const calcMoveOffset = (nowIdx: number) => {
-    // width: 100%; gap: 5%;
-    return nowIdx * -100 + nowIdx * -5
+    /** width: 100%; gap: 5%; */
+    return nowIdx * -100 + nowIdx * -5 + "%"
   }
 
-  export let count: number
-  let calcMovedIdx = counter(count)
-  let currIdx = 0
-  let offset = 0
-
-  const move = () => {
-    offset = calcMoveOffset(currIdx)
+  const slide = () => {
+    slideOffset = calcMoveOffset(currIdx)
   }
 
   const onClickNextButton = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
     currIdx = calcMovedIdx("next")
-    move()
+    slide()
   }
 
   const onClickPrevButton = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
     currIdx = calcMovedIdx("prev")
-    move()
+    slide()
   }
 
   const onClickIndicator = (e: MouseEvent | TouchEvent, idx: number) => {
     e.preventDefault()
     currIdx = calcMovedIdx(idx)
-    move()
+    slide()
+  }
+
+  const getIdxSwipeEnd = () => {
+    /** 閾値を超えているかどうかの判定に使う */
+    const absMoveX = Math.abs(pointer.moveX)
+    const addIdx = pointer.moveX > 0 ? -1 : 1
+
+    const isOverThreshold = absMoveX > containerEl.clientWidth * SWIPE_THRESHOLD
+    const isNotExistNext = currIdx === 0 && addIdx === -1
+    const isNotExistPrev = currIdx === count - 1 && addIdx === 1
+
+    /** 遷移しない */
+    if (!isOverThreshold || isNotExistPrev || isNotExistNext) {
+      return currIdx
+    }
+    /** 遷移する */
+    return currIdx + addIdx
+  }
+
+  /** pointerdown時 */
+  const onSwipeStart = (e: PointerEvent) => {
+    if (!e.isPrimary) return
+    e.preventDefault()
+    pointer.startX = e.clientX
+    pointer.hold = true
+    /** 追従動作中のdurationは0に */
+    duration = SWIPE_DURATION
+  }
+
+  /** pointermove時 */
+  const onSwiping = (e: PointerEvent) => {
+    if (!e.isPrimary || !pointer.hold) return
+    e.preventDefault()
+    const moveX = e.clientX - pointer.startX
+    pointer.moveX = moveX
+    swipeOffset = moveX + "px"
+  }
+
+  /** pointerup時 */
+  const onSwipeEnd = (e: PointerEvent) => {
+    if (!e.isPrimary || !pointer.hold) return
+    e.preventDefault()
+    /** スワイプ追従終了 */
+    duration = SLIDE_DURATION
+    swipeOffset = "0px"
+    /** 必要に応じてスライドを実行 */
+    const prevIdx = currIdx
+    currIdx = getIdxSwipeEnd()
+    if (prevIdx !== currIdx) {
+      slide()
+    }
+    /** pointer情報をリセット */
+    pointer.startX = 0
+    pointer.moveX = 0
+    pointer.hold = false
   }
 </script>
 
 <div class="carousel">
   <div class="carousel-content">
-    <div class="carousel-visible">
-      <div class="carousel-slide" style={`--slide-offset: ${offset}%`}>
+    <div
+      class="carousel-visible"
+      bind:this={containerEl}
+      on:pointerdown={onSwipeStart}
+      on:pointermove={onSwiping}
+      on:pointerup={onSwipeEnd}
+      on:pointercancel={onSwipeEnd}
+    >
+      <div
+        class="carousel-slide"
+        style={[
+          `--offset: calc(${slideOffset} + ${swipeOffset})`,
+          `--duration: ${duration}s`,
+        ].join(";")}
+      >
         <slot />
       </div>
     </div>
@@ -118,6 +196,8 @@
   .carousel-visible {
     overflow: hidden;
     padding: 2.5%;
+    /** スワイプとタッチ操作の衝突を回避 */
+    touch-action: none;
   }
 
   /** スライドするアイテム全体 */
@@ -127,9 +207,9 @@
     width: 100%;
     gap: 5%;
     /* トランジション周りの指定を追加 */
-    transform: translateX(var(--slide-offset, 0));
+    transform: translateX(var(--offset, 0));
     transition-property: transform;
-    transition-duration: 0.2s;
+    transition-duration: var(--duration);
     transition-timing-function: ease;
   }
 
@@ -166,9 +246,7 @@
     right: 0;
   }
 
-  .carousel-prev-next__button:hover,
-  .carousel-prev-next__button:focus,
-  .carousel-prev-next__button:active {
+  .carousel-prev-next__button:hover {
     border-top-color: var(--arrow-color--hover);
     border-right-color: var(--arrow-color--hover);
   }
@@ -196,8 +274,6 @@
   }
 
   .carousel-indicator__button:hover,
-  .carousel-indicator__button:focus,
-  .carousel-indicator__button:active,
   .carousel-indicator__button.--active {
     background-color: #b1afff;
   }
