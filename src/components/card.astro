@@ -5,13 +5,14 @@ interface Props {
     alt: string
     trimmingH?: number
   }
+  class?: string
 }
 
-const { image } = Astro.props
+const { image, ...props } = Astro.props
 const trimmingH = `${image.trimmingH ? image.trimmingH * 100 : 50}%`
 ---
 
-<div class="card">
+<div class:list={["card", props.class]}>
   <figure class="card__figure">
     <img src={image.src} alt={image.alt} />
   </figure>
