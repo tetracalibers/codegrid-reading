@@ -2,15 +2,18 @@
   import { onMount } from "svelte"
 
   let slideContentEl: HTMLDivElement
-  let current: () => number
+  let calcMovedIdx: (offset: number) => number
   let offset = 0
 
   const counter = (limit: number) => {
     let count = 0
-    return () => {
-      count++
+    return (offset: number) => {
+      count += offset
       if (!(count < limit)) {
         count = 0
+      }
+      if (count < 0) {
+        count = limit - 1
       }
       return count
     }
@@ -18,12 +21,17 @@
 
   const onClickNextButton = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
-    offset = current() * -100
+    offset = calcMovedIdx(+1) * -100
+  }
+
+  const onClickPrevButton = (e: MouseEvent | TouchEvent) => {
+    e.preventDefault()
+    offset = calcMovedIdx(-1) * -100
   }
 
   onMount(() => {
     const items = slideContentEl.querySelectorAll(".carousel__slide-list-item")
-    current = counter(items.length)
+    calcMovedIdx = counter(items.length)
   })
 </script>
 
@@ -36,6 +44,7 @@
     <slot />
   </div>
 </div>
+<button on:click={onClickPrevButton}>Prev</button>
 <button on:click={onClickNextButton}>Next</button>
 
 <style>
