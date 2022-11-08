@@ -1,14 +1,10 @@
 <script lang="ts">
-  import { onMount } from "svelte"
-
-  let slideContentEl: HTMLDivElement
-  let calcMovedIdx: (offset: number) => number
-  let offset = 0
-
   const counter = (limit: number) => {
     let count = 0
-    return (offset: number) => {
-      count += offset
+    return (move: "prev" | "next" | number) => {
+      if (move === "prev") count -= 1
+      if (move === "next") count += 1
+      if (typeof move === "number") count = move
       if (!(count < limit)) {
         count = 0
       }
@@ -19,33 +15,42 @@
     }
   }
 
+  export let count: number
+  let calcMovedIdx = counter(count)
+  let offset = 0
+
   const onClickNextButton = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
-    offset = calcMovedIdx(+1) * -100
+    offset = calcMovedIdx("next") * -100
   }
 
   const onClickPrevButton = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
-    offset = calcMovedIdx(-1) * -100
+    offset = calcMovedIdx("prev") * -100
   }
 
-  onMount(() => {
-    const items = slideContentEl.querySelectorAll(".carousel__slide-list-item")
-    calcMovedIdx = counter(items.length)
-  })
+  const onClickIndicator = (e: MouseEvent | TouchEvent, idx: number) => {
+    e.preventDefault()
+    offset = calcMovedIdx(idx) * -100
+  }
 </script>
 
 <div class="carousel">
-  <div
-    class="carousel__slide-list"
-    bind:this={slideContentEl}
-    style={`--slide-offset: ${offset}%`}
-  >
+  <div class="carousel__slide-list" style={`--slide-offset: ${offset}%`}>
     <slot />
   </div>
 </div>
 <button on:click={onClickPrevButton}>Prev</button>
 <button on:click={onClickNextButton}>Next</button>
+<ul>
+  {#each [...new Array(count)] as _, i}
+    <li>
+      <button on:click={e => onClickIndicator(e, i)}>
+        {i + 1}
+      </button>
+    </li>
+  {/each}
+</ul>
 
 <style>
   /** 見える範囲 */

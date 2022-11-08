@@ -27,7 +27,7 @@ const cards = [...new Array(10)].map((_, i) => ({
   </head>
   <body>
     <h1>カルーセル</h1>
-    <Carousel client:visible>
+    <Carousel client:visible count={cards.length}>
       {
         cards.map(card => (
           <Card
