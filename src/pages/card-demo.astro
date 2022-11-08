@@ -1,0 +1,44 @@
+---
+import CardLayout from "@/components/card-layout.astro"
+import Card from "@/components/card.astro"
+
+//最大値・最小値を引数に持つ関数
+function getRandom(min, max) {
+  var random = Math.floor(Math.random() * (max + 1 - min)) + min
+
+  return random
+}
+
+const cards = [...new Array(10)].map((_, i) => ({
+  title: `カード${(i + 1).toString().padStart(2, "0")}`,
+  content:
+    "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。".repeat(
+      getRandom(1, 4),
+    ),
+}))
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <h1>カード</h1>
+    <CardLayout>
+      {
+        cards.map(card => (
+          <Card
+            image={{ src: "/images/algorithm-datastructureLogo.jpg", alt: "" }}
+          >
+            <h2>{card.title}</h2>
+            <p>{card.content}</p>
+          </Card>
+        ))
+      }
+    </CardLayout>
+  </body>
+</html>
