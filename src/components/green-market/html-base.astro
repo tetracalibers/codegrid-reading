@@ -19,7 +19,7 @@
   </head>
   <body>
     <slot />
-    <style>
+    <style is:global>
       body {
         margin: 0;
         background-color: #ecf1e9;
@@ -27,6 +27,12 @@
         font-family: "Sawarabi Gothic", sans-serif;
         font-size: 1rem;
         line-height: 1.85;
+      }
+
+      a {
+        color: #333;
+        text-decoration: none;
+        outline: none;
       }
     </style>
   </body>

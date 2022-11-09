@@ -1,0 +1,21 @@
+---
+import { categories } from "@/contents/green-market/category.yml"
+import LinkListTab from "./link-list-tab.svelte"
+
+const { ...props } = Astro.props
+
+const tabContents = {
+  title: "商品カテゴリー",
+  items: categories,
+}
+---
+
+<div class:list={[props.class]}>
+  <!-- <h2>side</h2>
+  <ul>
+    <li>円が縮小して押し込まれるボタン</li>
+    <li>文章やボタンにカーソルを合わせると補足情報が表示される</li>
+    <li>タブメニュー</li>
+  </ul> -->
+  <LinkListTab client:visible contents={tabContents} />
+</div>

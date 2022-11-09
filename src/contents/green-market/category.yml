@@ -1,0 +1,56 @@
+categories:
+  - title: 用途
+    id: usecase
+    links:
+      - label: お誕生日
+        url: "#"
+      - label: 結婚・出産祝い
+        url: "#"
+      - label: 公演・コンサート・楽屋花
+        url: "#"
+      - label: 開店・開業・移転等のお祝い
+        url: "#"
+      - label: 記念日
+        url: "#"
+      - label: 就任・昇進・昇格のお祝い
+        url: "#"
+      - label: お見舞い
+        url: "#"
+      - label: 供花・お悔み・お供え
+        url: "#"
+
+  - title: 色
+    id: color
+    links:
+      - label: イエロー
+        url: "#"
+      - label: オレンジ
+        url: "#"
+      - label: ピンク
+        url: "#"
+      - label: "レッド"
+        url: "#"
+      - label: "ブルー"
+        url: "#"
+      - label: パープル
+        url: "#"
+      - label: ホワイト
+        url: "#"
+      - label: ミックス
+        url: "#"
+
+  - title: 価格
+    id: price
+    links:
+      - label: ¥ 1,000 -
+        url: "#"
+      - label: ¥ 2,000 -
+        url: "#"
+      - label: ¥ 3,000 -
+        url: "#"
+      - label: ¥ 4,000 -
+        url: "#"
+      - label: ¥ 5,000 -
+        url: "#"
+      - label: オーダーメイド
+        url: "#"
