@@ -2,41 +2,42 @@
 import "@acab/reset.css"
 import HtmlBase from "@/components/green-market/html-base.astro"
 import Header from "@/components/green-market/header.astro"
+import SectionTitle from "@/components/green-market/section-title.astro"
 ---
 
 <HtmlBase>
   <Header />
   <div class="gm-hero debug-layout">
-    <h1>hero</h1>
+    <h2>hero</h2>
     <ul>
       <li>複数画像を中央に注目させて見せる</li>
     </ul>
   </div>
   <div class="gm-layout-switch">
     <div class="gm-layout-switch__item --main">
-      <div class="gm-main__item gm-main__popularity debug-layout">
-        <h1>ranking</h1>
+      <section class="gm-main__item gm-main__popularity debug-layout">
+        <SectionTitle text="ranking" />
         <ul>
           <li>見出し</li>
           <li>カード型レイアウト</li>
         </ul>
-      </div>
-      <div class="gm-main__item gm-main__latest debug-layout">
-        <h1>new items</h1>
+      </section>
+      <section class="gm-main__item gm-main__latest debug-layout">
+        <SectionTitle text="new items" />
         <ul>
           <li>見出し</li>
           <li>サムネイルをクリックするとメイン画像が切り替わる</li>
         </ul>
-      </div>
+      </section>
       <div class="gm-main__item gm-main__news debug-layout">
-        <h1>news</h1>
+        <h2>news</h2>
         <ul>
           <li>任意の場所をクリックすると隠れていた内容が開く</li>
         </ul>
       </div>
     </div>
     <div class="gm-layout-switch__item --side debug-layout">
-      <h1>side</h1>
+      <h2>side</h2>
       <ul>
         <li>円が縮小して押し込まれるボタン</li>
         <li>文章やボタンにカーソルを合わせると補足情報が表示される</li>
@@ -45,7 +46,7 @@ import Header from "@/components/green-market/header.astro"
     </div>
   </div>
   <div class="gm-footer debug-layout">
-    <h1>footer</h1>
+    <h2>footer</h2>
     <ul>
       <li>横並びから縦並びへ</li>
     </ul>
