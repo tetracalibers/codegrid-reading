@@ -17,11 +17,58 @@
 
   export let contents: TabContents
 
+  const tabs: HTMLButtonElement[] = []
+  const tabsLastIdx = contents.items.length - 1
   let activeIdx = 0
+  let focusedIdx = 0
+
+  const focusTab = (idx: number) => {
+    tabs[idx]?.focus()
+  }
+
+  const focusNextTab = () => {
+    let nextIdx = focusedIdx + 1
+    if (nextIdx > tabsLastIdx) {
+      nextIdx = 0
+    }
+    focusTab(nextIdx)
+  }
+
+  const focusPrevTab = () => {
+    let prevIdx = focusedIdx - 1
+    if (prevIdx < 0) {
+      prevIdx = tabsLastIdx
+    }
+    focusTab(prevIdx)
+  }
+
+  const onFocusTab = (idx: number) => {
+    focusedIdx = idx
+  }
 
   const onClickTab = (idx: number) => {
     if (activeIdx === idx) return
     activeIdx = idx
+  }
+
+  const onKeydownTab = (e: KeyboardEvent) => {
+    const key = e.key
+    switch (key) {
+      case "ArrowRight":
+      case "Right":
+        focusNextTab()
+        break
+      case "ArrowLeft":
+      case "Left":
+        focusPrevTab()
+        break
+      case "Home":
+        focusTab(0)
+        break
+      case "End":
+        focusTab(tabsLastIdx)
+        break
+    }
   }
 </script>
 
@@ -37,7 +84,10 @@
           aria-controls={`gm-tabpanel-${id}`}
           aria-selected={isActive}
           tabIndex={isActive ? 0 : -1}
+          bind:this={tabs[i]}
           on:click={() => onClickTab(i)}
+          on:focus={() => onFocusTab(i)}
+          on:keydown={onKeydownTab}
         >
           {title}
         </button>
