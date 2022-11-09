@@ -1,0 +1,43 @@
+---
+const { ...props } = Astro.props
+---
+
+<header class:list={[props.class, "gm-header"]}>
+  <!-- <h1>header</h1>
+    <ul>
+      <li>ヘッダ</li>
+      <li>虫眼鏡マークをクリックすると検索窓が伸びて出現</li>
+      <li>写真付き上ナビドロップダウン &lt;-&gt; ハンバーガーメニュー</li>
+    </ul> -->
+  <h1 class="gm-header-title">
+    <a href="/green-market" class="gm-header-title__link">
+      <img
+        class="gm-header-title__logo"
+        src="/images/coco-factory/grean-market/logo.png"
+        alt=""
+      />
+      <span class="visually-hidden">green market</span>
+    </a>
+  </h1>
+</header>
+
+<style>
+  .gm-header {
+    background-image: url("/images/coco-factory/grean-market/bg_header.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top center;
+  }
+
+  .gm-header-title {
+    max-width: 150px;
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 20px;
+  }
+
+  .gm-header-title__logo {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

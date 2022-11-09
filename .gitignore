@@ -1,6 +1,7 @@
 # my
 *.txt
 mock
+coco-factory
 
 # build output
 dist/
