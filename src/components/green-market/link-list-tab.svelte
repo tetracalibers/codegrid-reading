@@ -137,9 +137,6 @@
   }
 
   .gm-tabs-tablist__item button {
-    appearance: none;
-    background-color: transparent;
-    border: none;
     padding: 10px;
     width: 100%;
   }

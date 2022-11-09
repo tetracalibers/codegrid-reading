@@ -4,6 +4,7 @@ import HtmlBase from "@/components/green-market/html-base.astro"
 import Header from "@/components/green-market/header.astro"
 import SectionTitle from "@/components/green-market/section-title.astro"
 import Side from "@/components/green-market/side.astro"
+import News from "@/components/green-market/news.astro"
 ---
 
 <HtmlBase>
@@ -28,12 +29,7 @@ import Side from "@/components/green-market/side.astro"
           <li>サムネイルをクリックするとメイン画像が切り替わる</li>
         </ul>
       </section>
-      <div class="gm-main__item gm-main__news debug-layout">
-        <h2>news</h2>
-        <ul>
-          <li>任意の場所をクリックすると隠れていた内容が開く</li>
-        </ul>
-      </div>
+      <News class="gm-main__item" />
     </div>
     <Side class="gm-layout-switch__item --side" />
   </div>

@@ -1,0 +1,32 @@
+---
+import news from "@/contents/green-market/news.yml"
+import Disclosure from "./disclosure.svelte"
+
+const { ...props } = Astro.props
+
+const contents = news.map(n => ({
+  summary: [n.date, n.title],
+  details: n.details,
+}))
+---
+
+<article class:list={[props.class, "gm-news"]}>
+  <h2 class="gm-news__title">news</h2>
+  <Disclosure client:visible contents={contents} id="gm-news" />
+</article>
+
+<style>
+  .gm-news {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px 0;
+  }
+
+  .gm-news__title {
+    padding: 0 20px 0 40px;
+    color: #457703;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+  }
+</style>
