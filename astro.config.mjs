@@ -14,6 +14,9 @@ export default defineConfig(
           "@": resolve(__dirname, "src"),
         },
       },
+      ssr: {
+        noExternal: ["@acab/reset.css"],
+      },
     },
     integrations: [svelte()],
   },

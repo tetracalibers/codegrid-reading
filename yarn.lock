@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@acab/reset.css@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@acab/reset.css/-/reset.css-0.5.3.tgz#58ee53a0f1f61189a46610dba105e4e1c487f3a1"
+  integrity sha512-pICfxGIMPgPCEm3lCpA16c00IKnpLeZmt7VtNoNfQX38jx7GuP0uEaUkU/QSxbWJaLmvAFpUJHwCLYZrMt2K7w==
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -2624,6 +2629,11 @@ node-releases@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.6.tgz#8a7088c63a55e493845683ebf3c828d8c51c5503"
   integrity sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==
+
+normalize.css@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+  integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
 npm-run-path@^5.1.0:
   version "5.1.0"
