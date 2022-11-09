@@ -4,71 +4,60 @@
     details: string[]
   }
 
-  export let contents: Content[]
+  export let content: Content
   export let id: string
+  export let key: number
 
-  let openedIdx: number[] = []
+  let opened = false
 
-  const onSummaryClick = (idx: number) => {
-    if (openedIdx.includes(idx)) {
-      openedIdx = openedIdx.filter(i => i !== idx)
-    } else {
-      openedIdx = [...openedIdx, idx]
-    }
+  const onSummaryClick = () => {
+    opened = !opened
   }
 </script>
 
-<div class="gm-disclosures">
-  {#each contents as { summary, details }, i}
-    {@const opened = openedIdx.includes(i)}
-    <section class="gm-disclosure-content">
-      <h3 class="gm-disclosure-content__summary">
-        <button
-          id={`${id}-disclosure-summary-${i}`}
-          aria-controls={`${id}-disclosure-detail-${i}`}
-          aria-expanded={opened}
-          on:click={() => onSummaryClick(i)}
-        >
-          {#each summary as word}
-            <span>{word}</span>
-          {/each}
-        </button>
-      </h3>
-      <div
-        class="gm-disclosure-content__detail"
-        id={`${id}-disclosure-detail-${i}`}
-        data-expanded={opened}
-      >
-        {#each details as paragraph}
-          <p>{paragraph}</p>
-        {/each}
-      </div>
-    </section>
-  {/each}
-</div>
+<section class="gm-disclosure">
+  <h3 class="gm-disclosure__summary">
+    <button
+      id={`${id}-disclosure-summary-${key}`}
+      aria-controls={`${id}-disclosure-detail-${key}`}
+      aria-expanded={opened}
+      on:click={onSummaryClick}
+    >
+      {#each content.summary as word}
+        <span>{word}</span>
+      {/each}
+    </button>
+  </h3>
+  <div
+    class="gm-disclosure__detail"
+    id={`${id}-disclosure-detail-${key}`}
+    data-expanded={opened}
+  >
+    {#each content.details as paragraph}
+      <p>{paragraph}</p>
+    {/each}
+  </div>
+</section>
 
 <style>
-  .gm-disclosures {
+  .gm-disclosure {
+    border-bottom: 1px solid #ccc;
     margin-inline: 1rem;
   }
 
-  .gm-disclosure-content {
-    border-bottom: 1px solid #ccc;
-  }
-
-  .gm-disclosure-content__summary {
+  .gm-disclosure__summary {
     font-size: 1rem;
     font-weight: normal;
   }
 
-  .gm-disclosure-content__summary button {
+  .gm-disclosure__summary button {
     display: inline-flex;
     gap: 1rem;
     width: 100%;
     padding: 20px 50px 20px 20px;
   }
 
-  .gm-disclosure-content__detail {
+  .gm-disclosure__detail {
     background: #f3f3f3;
     padding: 20px;
     display: flex;
@@ -76,12 +65,12 @@
     gap: 1rem;
   }
 
-  .gm-disclosure-content__detail p {
+  .gm-disclosure__detail p {
     margin: 0;
     padding: 0;
   }
 
-  .gm-disclosure-content__detail[data-expanded="false"] {
+  .gm-disclosure__detail[data-expanded="false"] {
     display: none;
   }
 </style>

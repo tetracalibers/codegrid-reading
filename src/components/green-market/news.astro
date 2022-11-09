@@ -12,7 +12,11 @@ const contents = news.map(n => ({
 
 <article class:list={[props.class, "gm-news"]}>
   <h2 class="gm-news__title">news</h2>
-  <Disclosure client:visible contents={contents} id="gm-news" />
+  {
+    contents.map((content, i) => (
+      <Disclosure client:visible content={content} id="gm-news" key={i} />
+    ))
+  }
 </article>
 
 <style>
