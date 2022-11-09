@@ -59,12 +59,13 @@
   .gm-disclosure-content__summary {
     font-size: 1rem;
     font-weight: normal;
-    padding: 20px 50px 20px 20px;
   }
 
   .gm-disclosure-content__summary button {
     display: inline-flex;
     gap: 1rem;
+    width: 100%;
+    padding: 20px 50px 20px 20px;
   }
 
   .gm-disclosure-content__detail {
