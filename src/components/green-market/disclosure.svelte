@@ -16,25 +16,27 @@
 </script>
 
 <section class="gm-disclosure">
-  <h3 class="gm-disclosure__summary">
+  <h3 class="gm-disclosure-summary">
     <button
       id={`${id}-disclosure-summary-${key}`}
       aria-controls={`${id}-disclosure-detail-${key}`}
       aria-expanded={opened}
+      class="gm-disclosure-summary__button"
       on:click={onSummaryClick}
     >
       {#each content.summary as word}
         <span>{word}</span>
       {/each}
+      <span class="gm-disclosure-summary__icon" data-expanded={opened} />
     </button>
   </h3>
   <div
-    class="gm-disclosure__detail"
+    class="gm-disclosure-detail"
     id={`${id}-disclosure-detail-${key}`}
     data-expanded={opened}
   >
     {#each content.details as paragraph}
-      <p>{paragraph}</p>
+      <p class="gm-disclosure-detail__paragraph">{paragraph}</p>
     {/each}
   </div>
 </section>
@@ -45,19 +47,46 @@
     margin-inline: 1rem;
   }
 
-  .gm-disclosure__summary {
+  .gm-disclosure-summary {
     font-size: 1rem;
     font-weight: normal;
   }
 
-  .gm-disclosure__summary button {
-    display: inline-flex;
+  .gm-disclosure-summary__button {
+    display: flex;
     gap: 1rem;
     width: 100%;
-    padding: 20px 50px 20px 20px;
+    padding: 20px;
   }
 
-  .gm-disclosure__detail {
+  .gm-disclosure-summary__icon {
+    width: 25px;
+    height: 25px;
+    background-color: #cbcaca;
+    border-radius: 50%;
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .gm-disclosure-summary__icon::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(135deg);
+    margin-top: -4.5px;
+  }
+
+  .gm-disclosure-summary__icon[data-expanded="true"]::after {
+    transform: rotate(315deg);
+    margin-top: 4.5px;
+  }
+
+  .gm-disclosure-detail {
     background: #f3f3f3;
     padding: 20px;
     display: flex;
@@ -65,12 +94,12 @@
     gap: 1rem;
   }
 
-  .gm-disclosure__detail p {
+  .gm-disclosure-detail__paragraph {
     margin: 0;
     padding: 0;
   }
 
-  .gm-disclosure__detail[data-expanded="false"] {
+  .gm-disclosure-detail[data-expanded="false"] {
     display: none;
   }
 </style>
