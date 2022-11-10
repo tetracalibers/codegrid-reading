@@ -1,0 +1,10 @@
+---
+import products from "@/contents/green-market/product.yml"
+import ProductLink from "./product-link.astro"
+
+const { ...props } = Astro.props
+---
+
+<div class:list={[props.class]}>
+  {products.map(product => <ProductLink product={product} />)}
+</div>

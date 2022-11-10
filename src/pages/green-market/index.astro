@@ -5,16 +5,12 @@ import Header from "@/components/green-market/header.astro"
 import SectionTitle from "@/components/green-market/section-title.astro"
 import Side from "@/components/green-market/side.astro"
 import News from "@/components/green-market/news.astro"
+import Hero from "@/components/green-market/hero.astro"
 ---
 
 <HtmlBase>
   <Header />
-  <div class="gm-hero debug-layout">
-    <h2>hero</h2>
-    <ul>
-      <li>複数画像を中央に注目させて見せる</li>
-    </ul>
-  </div>
+  <Hero class="gm-hero" />
   <div class="gm-layout-switch">
     <div class="gm-layout-switch__item --main">
       <section class="gm-main__item gm-main__popularity debug-layout">
