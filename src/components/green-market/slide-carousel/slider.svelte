@@ -71,8 +71,8 @@
     duration = SLIDE_DURATION
     swipeOffset = "0px"
     /** 必要に応じてスライドを実行 */
-    const prevIdx = currIdx
-    if (prevIdx !== currIdx) {
+    const nextIdx = getIdxSwipeEnd()
+    if (nextIdx !== $currIdx) {
       currIdx.set(getIdxSwipeEnd())
     }
     /** pointer情報をリセット */
