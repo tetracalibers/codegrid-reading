@@ -28,19 +28,21 @@
 
 <style>
   .gm-product-link {
-    width: 70vw;
+    --thumb-width: 70vw;
+
+    width: var(--thumb-width);
   }
 
   .gm-product-link__inner {
     position: relative;
-    width: 70vw;
+    width: var(--thumb-width);
   }
 
   .gm-product-link__image {
     border-radius: 10px;
     height: auto;
-    width: 70vw;
-    min-width: 70vw;
+    width: var(--thumb-width);
+    min-width: var(--thumb-width);
   }
 
   .gm-product-link__caption {
@@ -52,5 +54,11 @@
     padding: 2px 10px;
     border-radius: 10px;
     gap: 0.5rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .gm-product-link {
+      --thumb-width: 96vw;
+    }
   }
 </style>

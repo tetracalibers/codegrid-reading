@@ -21,7 +21,7 @@
 
   const calcMoveOffset = (nowIdx: number): `${number}%` => {
     /** width: 100%; gap: 5%; */
-    return `${nowIdx * -100 + nowIdx * -5}%`
+    return `${nowIdx * -100}%`
   }
 
   /** currIdxが変化したらスライドアニメーション */
@@ -92,10 +92,9 @@
 >
   <div
     class="carousel-slide"
-    style={[
-      `--offset: calc(${slideOffset} + ${swipeOffset})`,
-      `--duration: ${duration}s`,
-    ].join(";")}
+    style={[`--offset: calc(${slideOffset})`, `--duration: ${duration}s`].join(
+      ";",
+    )}
   >
     <slot />
   </div>
@@ -115,15 +114,22 @@
 
   /** スライドするアイテム全体 */
   .carousel-slide {
+    --slide-width: 70vw;
+
     display: flex;
     flex-wrap: nowrap;
     justify-items: center;
-    width: 70vw;
-    gap: 5%;
+    width: var(--slide-width);
     /* トランジション周りの指定を追加 */
     transform: translateX(var(--offset, 0));
     transition-property: transform;
     transition-duration: var(--duration);
     transition-timing-function: ease;
+  }
+
+  @media screen and (max-width: 768px) {
+    .carousel-slide {
+      --slide-width: 96vw;
+    }
   }
 </style>
