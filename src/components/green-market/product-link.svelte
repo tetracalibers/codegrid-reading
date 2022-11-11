@@ -1,24 +1,18 @@
----
-import FluidImage from "../fluid-image.astro"
+<script lang="ts">
+  interface Product {
+    name: string
+    price: number
+    page_url: string
+    img_name: string
+    img_alt: string
+  }
 
-interface Product {
-  name: string
-  price: number
-  page_url: string
-  img_name: string
-  img_alt: string
-}
+  export let product: Product
+</script>
 
-interface Props {
-  product: Product
-}
-
-const { product, ...props } = Astro.props
----
-
-<a href={product.page_url} class:list={[props.class, "gm-product-link"]}>
+<a href={product.page_url} class={[$$props.class, "gm-product-link"].join(" ")}>
   <figure class="gm-product-link__inner">
-    <FluidImage
+    <img
       class="gm-product-link__image"
       src={`/images/coco-factory/grean-market/${product.img_name}`}
       alt={product.img_alt}
@@ -33,12 +27,20 @@ const { product, ...props } = Astro.props
 </a>
 
 <style>
+  .gm-product-link {
+    width: 70vw;
+  }
+
   .gm-product-link__inner {
     position: relative;
+    width: 70vw;
   }
 
   .gm-product-link__image {
     border-radius: 10px;
+    height: auto;
+    width: 70vw;
+    min-width: 70vw;
   }
 
   .gm-product-link__caption {

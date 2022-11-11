@@ -1,10 +1,20 @@
 ---
 import products from "@/contents/green-market/product.yml"
-import ProductLink from "./product-link.astro"
+import ProductLink from "./product-link.svelte"
+import SlideCarouselItem from "./slide-carousel-item.svelte"
+import SlideCarousel from "./slide-carousel.svelte"
 
 const { ...props } = Astro.props
 ---
 
 <div class:list={[props.class]}>
-  {products.map(product => <ProductLink product={product} />)}
+  <SlideCarousel client:visible count={products.length}>
+    {
+      products.map((product, i) => (
+        <SlideCarouselItem idx={i}>
+          <ProductLink product={product} />
+        </SlideCarouselItem>
+      ))
+    }
+  </SlideCarousel>
 </div>
