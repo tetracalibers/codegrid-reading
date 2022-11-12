@@ -1,10 +1,11 @@
 <script lang="ts">
   import { getCarouselContext } from "./index.svelte"
 
-  const { currIdx, itemCount } = getCarouselContext()
+  const { currIdx, itemCount, dir } = getCarouselContext()
 
   const onClickPrevButton = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
+    dir.set(-1)
     currIdx.update(curr => {
       const prev = curr - 1
       return prev < 0 ? itemCount - 1 : prev

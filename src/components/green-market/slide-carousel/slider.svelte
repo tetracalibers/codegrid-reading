@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte"
-
   import { getCarouselContext } from "./index.svelte"
 
   /** スワイプ動作がパネルの20%を移動させたら遷移判定をする（閾値） */
@@ -10,7 +9,7 @@
   let rootel: HTMLElement
   let imgWidth: number
 
-  const { currIdx, itemCount } = getCarouselContext()
+  const { currIdx, itemCount, dir } = getCarouselContext()
 
   let swipeOffset: `${number}px` = "0px"
   let pointer = {
@@ -32,7 +31,7 @@
     slide()
   })
 
-  const getIdxSwipeEnd = () => {
+  const slideBySwipe = () => {
     /** 閾値を超えているかどうかの判定に使う */
     const absMoveX = Math.abs(pointer.moveX)
     const addIdx = pointer.moveX > 0 ? -1 : 1
@@ -41,7 +40,7 @@
 
     /** 遷移しない */
     if (!isOverThreshold) {
-      return $currIdx
+      return
     }
 
     /** 遷移する */
@@ -52,7 +51,8 @@
     if (swipedIdx < 0) {
       swipedIdx = itemCount - 1
     }
-    return swipedIdx
+    dir.set(addIdx)
+    currIdx.set(swipedIdx)
   }
 
   /** pointerdown時 */
@@ -79,10 +79,7 @@
     /** スワイプ追従終了 */
     swipeOffset = "0px"
     /** 必要に応じてスライドを実行 */
-    const nextIdx = getIdxSwipeEnd()
-    if (nextIdx !== $currIdx) {
-      currIdx.set(nextIdx)
-    }
+    slideBySwipe()
     /** pointer情報をリセット */
     pointer.startX = 0
     pointer.moveX = 0
@@ -130,6 +127,9 @@
     padding-left: calc(var(--slide-width) / var(--count));
     /** 2つ目のslotが表示されるように */
     margin-left: calc(-1 * var(--slide-width) * var(--count));
+    margin-right: calc(
+      -1 * var(--slide-width) * (var(--count) - 1) + var(--slide-width) / var(--count)
+    );
     /** スワイプとタッチ操作の衝突を回避 */
     touch-action: none;
     /** スワイプ追従 */

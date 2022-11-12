@@ -4,6 +4,7 @@
 
   export interface CarouselContextData {
     currIdx: Writable<number>
+    dir: Writable<1 | -1>
     itemCount: number
   }
 
@@ -15,7 +16,7 @@
 
 <script lang="ts">
   import { setContext } from "svelte"
-  import { currIdx } from "./carousel.store"
+  import { currIdx, dir } from "./carousel.store"
 
   import Indicators from "./indicators.svelte"
   import NextButton from "./next-button.svelte"
@@ -26,6 +27,7 @@
 
   setContext(CONTEXT_KEY, {
     currIdx,
+    dir,
     itemCount,
   })
 </script>

@@ -1,10 +1,13 @@
 <script lang="ts">
+  import { dir } from "./carousel.store"
+
   import { getCarouselContext } from "./index.svelte"
 
   const { currIdx, itemCount } = getCarouselContext()
 
   const onClickIndicator = (e: MouseEvent | TouchEvent, idx: number) => {
     e.preventDefault()
+    dir.set($currIdx < idx ? 1 : -1)
     currIdx.set(idx)
   }
 </script>

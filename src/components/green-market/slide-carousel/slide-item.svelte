@@ -3,7 +3,7 @@
 
   export let idx: number
 
-  const { currIdx, itemCount } = getCarouselContext()
+  const { currIdx, itemCount, dir } = getCarouselContext()
 
   let isCurrent: boolean
   let isPrev: boolean
@@ -23,9 +23,9 @@
     isPrev ? "--prev" : "",
     isNext ? "--next" : "",
   ].join(" ")}
-  style={`--idx: ${idx}`}
+  style={[`--idx: ${idx}`, `--dir: ${$dir}`].join(";")}
 >
-  <div style={`--current: ${$currIdx}`}><slot /></div>
+  <slot />
 </div>
 
 <style>
@@ -52,7 +52,7 @@
 
   @keyframes current {
     from {
-      transform: scale(0.8) translateX(var(--slide-width));
+      transform: scale(0.8) translateX(calc(var(--dir, 1) * var(--slide-width)));
     }
     to {
       transform: scale(1) translateX(0);
@@ -61,7 +61,7 @@
 
   @keyframes prev {
     from {
-      transform: scale(1) translateX(var(--slide-width));
+      transform: scale(1) translateX(calc(var(--dir, 1) * var(--slide-width)));
     }
     to {
       transform: scale(0.8) translateX(0px);
@@ -70,7 +70,7 @@
 
   @keyframes next {
     from {
-      transform: translateX(var(--slide-width)) scale(1);
+      transform: translateX(calc(var(--dir, 1) * var(--slide-width))) scale(1);
     }
     to {
       transform: translateX(0px) scale(0.8);
