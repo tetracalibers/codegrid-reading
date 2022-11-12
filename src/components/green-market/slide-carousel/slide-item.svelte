@@ -3,18 +3,16 @@
 
   export let idx: number
 
-  const { currIdx, itemCount } = getCarouselContext()
+  const { currIdx } = getCarouselContext()
 
   let isCurrent: boolean
   let isPrev: boolean
   let isNext: boolean
-  let isFirstAndNext: boolean
 
   currIdx.subscribe(curr => {
     isCurrent = idx === curr
     isPrev = curr - idx === 1
     isNext = idx - curr === 1
-    isFirstAndNext = curr === itemCount - 1 && idx === 0
   })
 </script>
 
@@ -24,33 +22,27 @@
     isCurrent ? "--current" : "",
     isPrev ? "--prev" : "",
     isNext ? "--next" : "",
-    isFirstAndNext ? "--first-and-next" : "",
   ].join(" ")}
+  style={`--idx: ${idx}`}
 >
-  <slot />
+  <div style={`--current: ${$currIdx}`}><slot /></div>
 </div>
 
 <style>
   .carousel-slide__item {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 100%;
+    --base-transform: rotateY(calc(var(--idx) * 360deg / 5))
+      translateZ(var(--slide-width)) rotateY(calc(var(--idx) * -360deg / 5));
+
     transform-style: preserve-3d;
-    transform: rotateY(calc(var(--offset) * 60deg));
+    transform: var(--base-transform);
   }
 
-  .carousel-slide__item.--prev {
-    transform: translateX(2rem) scale(0.7);
-    z-index: -1;
+  .carousel-slide__item > div {
+    position: absolute;
+    width: var(--slide-width);
+    height: 530px;
+    transform: rotateY(calc(360deg + var(--offset) * 360deg / 5));
+    transform-style: preserve-3d;
+    transition: transform 1s;
   }
-
-  .carousel-slide__item.--next {
-    transform: translateX(-2rem) scale(0.7);
-    z-index: -1;
-  }
-
-  /* .carousel-slide__item.--first-and-next {
-    transform: translateX(calc(-1 * var(--offset) + 100% + 2rem)) scale(0.7);
-    z-index: -1;
-  } */
 </style>

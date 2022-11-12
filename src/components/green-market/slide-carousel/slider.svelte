@@ -10,7 +10,7 @@
 
   const { currIdx, itemCount } = getCarouselContext()
 
-  let slideOffset: `${number}%` = "0%"
+  let slideOffset = 0
   let swipeOffset: `${number}px` = "0px"
   let duration = 0.2
   let pointer = {
@@ -19,9 +19,10 @@
     hold: false,
   }
 
-  const calcMoveOffset = (nowIdx: number): `${number}%` => {
-    /** width: 100%; gap: 5%; */
-    return `${nowIdx * -100}%`
+  let counter = 0
+
+  const calcMoveOffset = (nowIdx: number): number => {
+    return ++counter
   }
 
   /** currIdxが変化したらスライドアニメーション */
@@ -92,9 +93,7 @@
 >
   <div
     class="carousel-slide"
-    style={[`--offset: calc(${slideOffset})`, `--duration: ${duration}s`].join(
-      ";",
-    )}
+    style={[`--offset: ${slideOffset}`, `--duration: ${duration}s`].join(";")}
   >
     <slot />
   </div>
@@ -103,33 +102,33 @@
 <style>
   /** 見える範囲 */
   .carousel-visible {
-    overflow: hidden;
-    padding: 2.5%;
+    --slide-width: 70vw;
     /** スワイプとタッチ操作の衝突を回避 */
     touch-action: none;
-    /** センタリング */
-    display: flex;
-    justify-content: center;
+    perspective: calc(var(--slide-width) * 7);
+    position: relative;
+    width: var(--slide-width);
+    height: 530px;
+    margin: 0 auto;
   }
 
   /** スライドするアイテム全体 */
   .carousel-slide {
-    --slide-width: 70vw;
-
-    display: flex;
-    flex-wrap: nowrap;
-    justify-items: center;
+    position: absolute;
     width: var(--slide-width);
-    /* トランジション周りの指定を追加 */
-    transform: translateX(var(--offset, 0));
-    transition-property: transform;
-    transition-duration: var(--duration);
-    transition-timing-function: ease;
+    height: 600px;
+    transform-style: preserve-3d;
+    transform: rotateY(calc(-1 * (360deg + var(--offset) * 360deg / 5)));
+    /* animation: rotar 30s infinite linear; */
+    transition: transform 1s;
   }
 
-  @media screen and (max-width: 768px) {
-    .carousel-slide {
-      --slide-width: 96vw;
+  @keyframes rotar {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
     }
   }
 </style>

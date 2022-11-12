@@ -55,10 +55,4 @@
     border-radius: 10px;
     gap: 0.5rem;
   }
-
-  @media screen and (max-width: 768px) {
-    .gm-product-link {
-      --thumb-width: 96vw;
-    }
-  }
 </style>
