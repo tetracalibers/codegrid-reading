@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { onMount } from "svelte"
+  import { ComponentType, onMount } from "svelte"
   import { getCarouselContext } from "./index.svelte"
+  import SlideItem from "./slide-item.svelte"
 
   /** スワイプ動作がパネルの20%を移動させたら遷移判定をする（閾値） */
   const SWIPE_THRESHOLD = 0.2
+
+  export let datalist: Record<string, unknown>[]
+  export let component: ComponentType
+  const SlideItemInner = component
 
   let containerEl: HTMLDivElement
   let rootel: HTMLElement
@@ -112,15 +117,17 @@
   style={[`--swipe-offset: ${swipeOffset}`, `--count: ${itemCount}`].join(";")}
 >
   <div class="carousel-slide-list">
-    <div class="carousel-slides-group --dummy" inert>
-      <slot />
-    </div>
-    <div class="carousel-slides-group">
-      <slot />
-    </div>
-    <div class="carousel-slides-group --dummy" inert>
-      <slot />
-    </div>
+    <SlideItem idx={itemCount - 1}>
+      <SlideItemInner {...datalist[itemCount - 1]} />
+    </SlideItem>
+    {#each datalist as data, i}
+      <SlideItem idx={i}>
+        <SlideItemInner {...data} />
+      </SlideItem>
+    {/each}
+    <SlideItem idx={0}>
+      <SlideItemInner {...datalist[0]} />
+    </SlideItem>
   </div>
 </div>
 <div class="visually-hidden" aria-live="polite" aria-atomic="true">
@@ -135,7 +142,7 @@
     /** 中央配置 */
     padding-left: calc(var(--slide-width) / var(--count));
     /** 2つ目のslotが表示されるように */
-    margin-left: calc(-1 * var(--slide-width) * var(--count));
+    margin-left: calc(-1 * var(--slide-width));
     /** スワイプとタッチ操作の衝突を回避 */
     touch-action: none;
     /** スワイプ追従 */
@@ -148,10 +155,5 @@
     display: flex;
     flex-wrap: nowrap;
     width: var(--slide-width);
-  }
-
-  .carousel-slides-group {
-    /** wrap効果をなくし、親要素のflexが子要素に効くようにする */
-    display: contents;
   }
 </style>
