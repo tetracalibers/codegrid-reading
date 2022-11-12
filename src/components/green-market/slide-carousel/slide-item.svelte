@@ -8,11 +8,13 @@
   let isCurrent: boolean
   let isPrev: boolean
   let isNext: boolean
+  let attrs: Record<string, unknown> = {}
 
   currIdx.subscribe(curr => {
     isCurrent = idx === curr
     isPrev = (curr === 0 && idx === itemCount - 1) || curr - idx === 1
     isNext = (curr === itemCount - 1 && idx === 0) || idx - curr === 1
+    attrs = !isCurrent ? { inert: true } : {}
   })
 </script>
 
@@ -24,6 +26,7 @@
     isNext ? "--next" : "",
   ].join(" ")}
   style={[`--idx: ${idx}`, `--dir: ${$dir}`].join(";")}
+  {...attrs}
 >
   <slot />
 </div>

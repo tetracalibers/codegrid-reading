@@ -112,9 +112,15 @@
   style={[`--swipe-offset: ${swipeOffset}`, `--count: ${itemCount}`].join(";")}
 >
   <div class="carousel-slide">
-    <slot />
-    <slot />
-    <slot />
+    <div class="carousel-slide__group" inert>
+      <slot />
+    </div>
+    <div class="carousel-slide__group">
+      <slot />
+    </div>
+    <div class="carousel-slide__group" inert>
+      <slot />
+    </div>
   </div>
 </div>
 
@@ -122,7 +128,7 @@
   /** 見える範囲 */
   .carousel-visible {
     --slide-width: 70vw;
-    overflow: hidden;
+    overflow-x: hidden;
     /** 中央配置 */
     padding-left: calc(var(--slide-width) / var(--count));
     /** 2つ目のslotが表示されるように */
@@ -139,5 +145,10 @@
     display: flex;
     flex-wrap: nowrap;
     width: var(--slide-width);
+  }
+
+  .carousel-slide__group {
+    /** wrap効果をなくし、親要素のflexが子要素に効くようにする */
+    display: contents;
   }
 </style>

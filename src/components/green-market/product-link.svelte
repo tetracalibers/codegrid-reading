@@ -31,6 +31,13 @@
     --thumb-width: 70vw;
 
     width: var(--thumb-width);
+    display: block;
+    border-radius: 10px;
+  }
+
+  .gm-product-link:focus {
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    margin: -3px;
   }
 
   .gm-product-link__inner {
