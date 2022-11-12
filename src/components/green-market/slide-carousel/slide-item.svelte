@@ -3,7 +3,7 @@
 
   export let idx: number
 
-  const { currIdx } = getCarouselContext()
+  const { currIdx, itemCount } = getCarouselContext()
 
   let isCurrent: boolean
   let isPrev: boolean
@@ -11,8 +11,8 @@
 
   currIdx.subscribe(curr => {
     isCurrent = idx === curr
-    isPrev = curr - idx === 1
-    isNext = idx - curr === 1
+    isPrev = (curr === 0 && idx === itemCount - 1) || curr - idx === 1
+    isNext = (curr === itemCount - 1 && idx === 0) || idx - curr === 1
   })
 </script>
 
@@ -30,19 +30,50 @@
 
 <style>
   .carousel-slide__item {
-    --base-transform: rotateY(calc(var(--idx) * 360deg / 5))
-      translateZ(var(--slide-width)) rotateY(calc(var(--idx) * -360deg / 5));
-
-    transform-style: preserve-3d;
-    transform: var(--base-transform);
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;
   }
 
-  .carousel-slide__item > div {
-    position: absolute;
-    width: var(--slide-width);
-    height: 530px;
-    transform: rotateY(calc(360deg + var(--offset) * 360deg / 5));
-    transform-style: preserve-3d;
-    transition: transform 1s;
+  .carousel-slide__item.--current {
+    transform: scale(1) translateX(0);
+    animation: current 0.4s;
+  }
+
+  .carousel-slide__item.--prev {
+    transform: scale(0.8) translateX(0);
+    animation: prev 0.4s;
+  }
+
+  .carousel-slide__item.--next {
+    transform: translateX(0) scale(0.8);
+    animation: next 0.4s;
+  }
+
+  @keyframes current {
+    from {
+      transform: scale(0.8) translateX(15.25vw);
+    }
+    to {
+      transform: scale(1) translateX(0);
+    }
+  }
+
+  @keyframes prev {
+    from {
+      transform: scale(1) translateX(15.25vw);
+    }
+    to {
+      transform: scale(0.8) translateX(0px);
+    }
+  }
+
+  @keyframes next {
+    from {
+      transform: translateX(15.25vw) scale(0.8);
+    }
+    to {
+      transform: translateX(0px) scale(0.8);
+    }
   }
 </style>
