@@ -17,13 +17,19 @@
 <script lang="ts">
   import { setContext } from "svelte"
   import { currIdx, dir } from "./carousel.store"
+  import { ComponentType } from "svelte/internal"
+  import SlideItem from "./slide-item.svelte"
 
   import Indicators from "./indicators.svelte"
   import NextButton from "./next-button.svelte"
   import PrevButton from "./prev-button.svelte"
   import Slider from "./slider.svelte"
 
-  export let itemCount: number
+  export let datalist: Record<string, unknown>[]
+  export let component: ComponentType
+
+  const itemCount = datalist.length
+  const SlideItemInner = component
 
   setContext(CONTEXT_KEY, {
     currIdx,
@@ -35,7 +41,9 @@
 <div class="carousel">
   <div class="carousel-content">
     <Slider>
-      <slot />
+      {#each datalist as data, i}
+        <SlideItem idx={i}><SlideItemInner {...data} /></SlideItem>
+      {/each}
     </Slider>
     <div class="carousel-prev-next">
       <PrevButton />

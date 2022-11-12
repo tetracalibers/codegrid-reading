@@ -1,7 +1,7 @@
 <script lang="ts">
   import ProductLink from "./product-link.svelte"
   import SlideCarousel from "@/components/green-market/slide-carousel/index.svelte"
-  import SlideItem from "./slide-carousel/slide-item.svelte"
+  import { ComponentType } from "svelte"
 
   interface Product {
     name: string
@@ -12,10 +12,9 @@
   }
 
   export let products: Product[]
+
+  const datalist = products.map(product => ({ product }))
+  const component = ProductLink as ComponentType
 </script>
 
-<SlideCarousel itemCount={products.length}>
-  {#each products as product, i}
-    <SlideItem idx={i}><ProductLink {product} /></SlideItem>
-  {/each}
-</SlideCarousel>
+<SlideCarousel {datalist} {component} />
