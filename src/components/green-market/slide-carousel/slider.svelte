@@ -123,6 +123,9 @@
     </div>
   </div>
 </div>
+<div class="visually-hidden" aria-live="polite" aria-atomic="true">
+  {itemCount}件中、{$currIdx + 1}件目を表示しています
+</div>
 
 <style>
   /** 見える範囲 */
