@@ -22,7 +22,9 @@
         )}
         on:click={e => onClickIndicator(e, i)}
       >
-        <span class="visually-hidden">{i + 1}</span>
+        <span class="visually-hidden">
+          {`${i + 1}件目のスライド${isActive ? "（現在表示中）" : ""}`}
+        </span>
       </button>
     </li>
   {/each}
