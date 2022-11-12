@@ -111,14 +111,14 @@
   on:pointercancel={onSwipeEnd}
   style={[`--swipe-offset: ${swipeOffset}`, `--count: ${itemCount}`].join(";")}
 >
-  <div class="carousel-slide">
-    <div class="carousel-slide__group" inert>
+  <div class="carousel-slide-list">
+    <div class="carousel-slides-group --dummy" inert>
       <slot />
     </div>
-    <div class="carousel-slide__group">
+    <div class="carousel-slides-group">
       <slot />
     </div>
-    <div class="carousel-slide__group" inert>
+    <div class="carousel-slides-group --dummy" inert>
       <slot />
     </div>
   </div>
@@ -144,13 +144,13 @@
   }
 
   /** スライドするアイテム全体 */
-  .carousel-slide {
+  .carousel-slide-list {
     display: flex;
     flex-wrap: nowrap;
     width: var(--slide-width);
   }
 
-  .carousel-slide__group {
+  .carousel-slides-group {
     /** wrap効果をなくし、親要素のflexが子要素に効くようにする */
     display: contents;
   }
