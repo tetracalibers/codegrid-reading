@@ -27,6 +27,10 @@
   export let component: ComponentType
 
   const itemCount = datalist.length
+  const ids = {
+    slideId: "carousel-slide",
+    indicatorId: "carousel-control",
+  }
 
   setContext(CONTEXT_KEY, {
     currIdx,
@@ -37,13 +41,13 @@
 
 <div class="carousel">
   <div class="carousel-content">
-    <Slider {datalist} {component} />
+    <Slider {datalist} {component} {...ids} />
     <div class="carousel-prev-next">
       <PrevButton />
       <NextButton />
     </div>
   </div>
-  <Indicators />
+  <Indicators {...ids} />
 </div>
 
 <style>

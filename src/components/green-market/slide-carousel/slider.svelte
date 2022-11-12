@@ -6,6 +6,8 @@
   /** スワイプ動作がパネルの20%を移動させたら遷移判定をする（閾値） */
   const SWIPE_THRESHOLD = 0.2
 
+  export let slideId = ""
+  export let indicatorId = ""
   export let datalist: Record<string, unknown>[]
   export let component: ComponentType
   const SlideItemInner = component
@@ -121,7 +123,7 @@
       <SlideItemInner {...datalist[itemCount - 1]} />
     </SlideItem>
     {#each datalist as data, i}
-      <SlideItem idx={i}>
+      <SlideItem idx={i} id={slideId} {indicatorId}>
         <SlideItemInner {...data} />
       </SlideItem>
     {/each}

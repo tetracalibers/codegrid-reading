@@ -2,23 +2,33 @@
   import { getCarouselContext } from "./index.svelte"
 
   export let idx: number
+  export let id = ""
+  export let indicatorId = ""
 
   const { currIdx, itemCount, dir } = getCarouselContext()
+
+  const staticAttrs = Object.fromEntries(
+    Object.entries({ id, "aria-describedby": indicatorId })
+      .filter(([_k, v]) => v.length > 0)
+      .map(([k, v]) => [k, `${v}-${idx}`]),
+  )
 
   let isCurrent: boolean
   let isPrev: boolean
   let isNext: boolean
-  let attrs: Record<string, unknown> = {}
+  let dynamicAttrs: Record<string, unknown> = {}
 
   currIdx.subscribe(curr => {
     isCurrent = idx === curr
     isPrev = (curr === 0 && idx === itemCount - 1) || curr - idx === 1
     isNext = (curr === itemCount - 1 && idx === 0) || idx - curr === 1
-    attrs = !isCurrent ? { inert: true } : {}
+    dynamicAttrs = !isCurrent ? { inert: true } : {}
   })
 </script>
 
 <div
+  {...staticAttrs}
+  {...dynamicAttrs}
   class={[
     "carousel-slide__item",
     isCurrent ? "--current" : "",
@@ -26,7 +36,6 @@
     isNext ? "--next" : "",
   ].join(" ")}
   style={[`--idx: ${idx}`, `--dir: ${$dir}`].join(";")}
-  {...attrs}
 >
   <slot />
 </div>

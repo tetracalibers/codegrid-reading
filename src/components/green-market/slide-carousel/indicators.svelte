@@ -1,9 +1,11 @@
 <script lang="ts">
   import { dir } from "./carousel.store"
-
   import { getCarouselContext } from "./index.svelte"
 
   const { currIdx, itemCount } = getCarouselContext()
+
+  export let slideId: string
+  export let indicatorId: string
 
   const onClickIndicator = (e: MouseEvent | TouchEvent, idx: number) => {
     e.preventDefault()
@@ -12,15 +14,18 @@
   }
 </script>
 
-<ul class="carousel-indicator">
+<ul class="carousel-indicator" role="tablist">
   {#each [...new Array(itemCount)] as _, i}
     {@const isActive = $currIdx === i}
-    <li class="carousel-indicator__item">
+    <li class="carousel-indicator__item" role="presentation">
       <button
         class={[`carousel-indicator__button`, isActive ? "--active" : ""].join(
           " ",
         )}
         on:click={e => onClickIndicator(e, i)}
+        role="tab"
+        id={`${indicatorId}-${i}`}
+        aria-controls={`${slideId}-${i}`}
       >
         <span class="visually-hidden">
           {`${i + 1}件目のスライド${isActive ? "（現在表示中）" : ""}`}
