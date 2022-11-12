@@ -127,13 +127,11 @@
     padding-left: calc(var(--slide-width) / var(--count));
     /** 2つ目のslotが表示されるように */
     margin-left: calc(-1 * var(--slide-width) * var(--count));
-    margin-right: calc(
-      -1 * var(--slide-width) * (var(--count) - 1) + var(--slide-width) / var(--count)
-    );
     /** スワイプとタッチ操作の衝突を回避 */
     touch-action: none;
     /** スワイプ追従 */
     transform: translateX(var(--swipe-offset));
+    margin-right: var(--swipe-offset);
   }
 
   /** スライドするアイテム全体 */
