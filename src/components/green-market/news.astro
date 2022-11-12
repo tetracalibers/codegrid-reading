@@ -14,7 +14,7 @@ const contents = news.map(n => ({
   <h2 class="gm-news__title">news</h2>
   {
     contents.map((content, i) => (
-      <Disclosure client:visible content={content} id="gm-news" key={i} />
+      <Disclosure client:load content={content} id="gm-news" key={i} />
     ))
   }
 </article>
