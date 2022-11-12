@@ -33,6 +33,8 @@
 
 <style>
   .carousel-slide__item {
+    --slide-duration: 0.5s;
+
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 100%;
@@ -40,17 +42,17 @@
 
   .carousel-slide__item.--current {
     transform: scale(1) translateX(0);
-    animation: current 0.4s;
+    animation: current var(--slide-duration);
   }
 
   .carousel-slide__item.--prev {
     transform: scale(0.8) translateX(0);
-    animation: prev 0.4s;
+    animation: prev var(--slide-duration);
   }
 
   .carousel-slide__item.--next {
     transform: translateX(0) scale(0.8);
-    animation: next 0.4s;
+    animation: next var(--slide-duration);
   }
 
   @keyframes current {
