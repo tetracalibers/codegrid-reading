@@ -27,7 +27,7 @@
 
   const slide = () => {
     if (containerEl) {
-      containerEl.scrollTo({
+      containerEl.scroll({
         left: $currIdx * imgWidth,
       })
     }
@@ -119,7 +119,7 @@
   style={[`--swipe-offset: ${swipeOffset}`, `--count: ${itemCount}`].join(";")}
 >
   <div class="carousel-slide-list">
-    <SlideItem idx={itemCount - 1}>
+    <SlideItem idx={-1}>
       <SlideItemInner {...datalist[itemCount - 1]} />
     </SlideItem>
     {#each datalist as data, i}
@@ -127,7 +127,7 @@
         <SlideItemInner {...data} />
       </SlideItem>
     {/each}
-    <SlideItem idx={0}>
+    <SlideItem idx={itemCount}>
       <SlideItemInner {...datalist[0]} />
     </SlideItem>
   </div>
@@ -141,14 +141,13 @@
   .carousel-visible {
     --slide-width: 70vw;
     overflow-x: hidden;
-    /** 中央配置 */
-    padding-left: calc(var(--slide-width) / var(--count));
     /** 2つ目のslotが表示されるように */
-    margin-left: calc(-1 * var(--slide-width));
+    margin-left: calc(-1 * var(--slide-width) * 0.8);
     /** スワイプとタッチ操作の衝突を回避 */
     touch-action: none;
     /** スワイプ追従 */
     transform: translateX(var(--swipe-offset));
+    /** スワイプ追従時の見切れを解消 */
     margin-right: var(--swipe-offset);
   }
 

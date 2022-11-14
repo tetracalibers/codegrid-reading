@@ -5,7 +5,7 @@
   export let id = ""
   export let indicatorId = ""
 
-  const { currIdx, itemCount, dir } = getCarouselContext()
+  const { currIdx, dir } = getCarouselContext()
 
   const staticAttrs = Object.fromEntries(
     Object.entries({ id, "aria-describedby": indicatorId })
@@ -20,8 +20,8 @@
 
   currIdx.subscribe(curr => {
     isCurrent = idx === curr
-    isPrev = (curr === 0 && idx === itemCount - 1) || curr - idx === 1
-    isNext = (curr === itemCount - 1 && idx === 0) || idx - curr === 1
+    isPrev = curr - idx === 1
+    isNext = idx - curr === 1
     dynamicAttrs = !isCurrent ? { inert: true } : {}
   })
 </script>
@@ -66,7 +66,8 @@
 
   @keyframes current {
     from {
-      transform: scale(0.8) translateX(calc(var(--dir, 1) * var(--slide-width)));
+      transform: scale(0.8)
+        translateX(calc(var(--dir, 1) * var(--slide-width) * 0.8));
     }
     to {
       transform: scale(1) translateX(0);
@@ -75,7 +76,8 @@
 
   @keyframes prev {
     from {
-      transform: scale(1) translateX(calc(var(--dir, 1) * var(--slide-width)));
+      transform: scale(1)
+        translateX(calc(var(--dir, 1) * var(--slide-width) * 0.8));
     }
     to {
       transform: scale(0.8) translateX(0px);
@@ -84,7 +86,8 @@
 
   @keyframes next {
     from {
-      transform: translateX(calc(var(--dir, 1) * var(--slide-width))) scale(1);
+      transform: translateX(calc(var(--dir, 1) * var(--slide-width) * 0.8))
+        scale(1);
     }
     to {
       transform: translateX(0px) scale(0.8);
