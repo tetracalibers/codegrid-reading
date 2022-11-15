@@ -6,7 +6,7 @@ import SectionTitle from "@/components/green-market/section-title.astro"
 import Side from "@/components/green-market/side.astro"
 import News from "@/components/green-market/news.astro"
 import Hero from "@/components/green-market/hero.astro"
-import NewItemList from "@/components/green-market/new-item-list.svelte"
+import NewItemsSection from "@/components/green-market/new-items-section.astro"
 ---
 
 <HtmlBase>
@@ -20,10 +20,7 @@ import NewItemList from "@/components/green-market/new-item-list.svelte"
           <li>カード型レイアウト</li>
         </ul>
       </section>
-      <section class="gm-main__item gm-main__latest">
-        <SectionTitle text="new items" />
-        <NewItemList />
-      </section>
+      <NewItemsSection class="gm-main__item gm-main__latest" />
       <News class="gm-main__item" />
     </div>
     <Side class="gm-layout-switch__item --side" />

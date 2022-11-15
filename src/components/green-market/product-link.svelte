@@ -23,9 +23,6 @@
 
 <style>
   .gm-product-link {
-    --thumb-width: 70vw;
-
-    width: var(--thumb-width);
     display: block;
     border-radius: 10px;
   }
@@ -37,14 +34,11 @@
 
   .gm-product-link__inner {
     position: relative;
-    width: var(--thumb-width);
   }
 
   .gm-product-link__image {
     border-radius: 10px;
     height: auto;
-    width: var(--thumb-width);
-    min-width: var(--thumb-width);
   }
 
   .gm-product-link__caption {

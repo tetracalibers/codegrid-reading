@@ -1,0 +1,12 @@
+---
+import NewItemList from "./new-item-list.svelte"
+import SectionTitle from "./section-title.astro"
+import newItems from "@/contents/green-market/new-item.yml"
+
+const { ...props } = Astro.props
+---
+
+<section class:list={[props.class]}>
+  <SectionTitle text="new items" />
+  <NewItemList client:load products={newItems} />
+</section>

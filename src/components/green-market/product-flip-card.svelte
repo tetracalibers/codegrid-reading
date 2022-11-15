@@ -5,7 +5,7 @@
   export let product: Product
 </script>
 
-<a class="flip --y" href={product.page_url}>
+<div class="flip --y">
   <figure class="flip__origin">
     <img
       class="flip__front flip__image"
@@ -17,7 +17,7 @@
       <div>{formatPrice(product.price)}</div>
     </figcaption>
   </figure>
-</a>
+</div>
 
 <style>
   .flip {
