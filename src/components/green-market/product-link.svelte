@@ -1,11 +1,6 @@
 <script lang="ts">
-  interface Product {
-    name: string
-    price: number
-    page_url: string
-    img_name: string
-    img_alt: string
-  }
+  import { Product } from "./types"
+  import { formatPrice } from "./utility/format-text"
 
   export let product: Product
 </script>
@@ -20,7 +15,7 @@
     <figcaption class="gm-product-link__caption">
       <span class="gm-product-link__name">{product.name}</span>
       <span class="gm-product-link__price">
-        ¥{product.price.toLocaleString()}
+        {formatPrice(product.price)}
       </span>
     </figcaption>
   </figure>

@@ -2,14 +2,7 @@
   import ProductLink from "./product-link.svelte"
   import SlideCarousel from "@/components/green-market/slide-carousel/index.svelte"
   import { ComponentType } from "svelte"
-
-  interface Product {
-    name: string
-    price: number
-    page_url: string
-    img_name: string
-    img_alt: string
-  }
+  import { Product } from "./types"
 
   export let products: Product[]
 

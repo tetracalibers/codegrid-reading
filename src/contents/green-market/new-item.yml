@@ -1,0 +1,23 @@
+- name: Bouquet
+  price: 5400
+  page_url: "#"
+  img_name: new01.jpg
+  img_alt: ""
+
+- name: Bouquet
+  price: 2500
+  page_url: "#"
+  img_name: new02.jpg
+  img_alt: ""
+
+- name: Bouquet
+  price: 1500
+  page_url: "#"
+  img_name: new03.jpg
+  img_alt: ""
+
+- name: Bouquet
+  price: 2400
+  page_url: "#"
+  img_name: new04.jpg
+  img_alt: ""

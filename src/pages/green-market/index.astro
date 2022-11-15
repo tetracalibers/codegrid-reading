@@ -6,6 +6,7 @@ import SectionTitle from "@/components/green-market/section-title.astro"
 import Side from "@/components/green-market/side.astro"
 import News from "@/components/green-market/news.astro"
 import Hero from "@/components/green-market/hero.astro"
+import NewItemList from "@/components/green-market/new-item-list.svelte"
 ---
 
 <HtmlBase>
@@ -19,11 +20,9 @@ import Hero from "@/components/green-market/hero.astro"
           <li>カード型レイアウト</li>
         </ul>
       </section>
-      <section class="gm-main__item gm-main__latest debug-layout">
+      <section class="gm-main__item gm-main__latest">
         <SectionTitle text="new items" />
-        <ul>
-          <li>サムネイルをクリックするとメイン画像が切り替わる</li>
-        </ul>
+        <NewItemList />
       </section>
       <News class="gm-main__item" />
     </div>
