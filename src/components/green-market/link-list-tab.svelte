@@ -145,8 +145,26 @@
     border-bottom: #457703 2px solid;
   }
 
-  .gm-tabs-panel[aria-hidden="true"] {
+  .gm-tabs-panel {
     display: none;
+    opacity: 0;
+  }
+
+  .gm-tabs-panel[aria-hidden="false"] {
+    display: block;
+    opacity: 1;
+    animation-name: fade;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   .gm-category-links__item a {
