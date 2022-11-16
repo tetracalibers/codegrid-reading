@@ -88,10 +88,22 @@
 
   .gm-disclosure-detail {
     background: #f3f3f3;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    transition-property: height, visibility, padding-top, padding-bottom;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+  }
+
+  .gm-disclosure-detail[data-expanded="true"] {
+    padding: 20px;
+    height: auto;
+    visibility: visible;
   }
 
   .gm-disclosure-detail__paragraph {
@@ -99,7 +111,14 @@
     padding: 0;
   }
 
-  .gm-disclosure-detail[data-expanded="false"] {
-    display: none;
+  @keyframes slideUpDown {
+    from {
+      visibility: visible;
+      height: 100%;
+    }
+    to {
+      visibility: hidden;
+      height: 0;
+    }
   }
 </style>
