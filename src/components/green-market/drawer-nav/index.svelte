@@ -2,6 +2,24 @@
   import BurgerButton from "./burger-button.svelte"
   import { onMount } from "svelte"
 
+  type BackdropAnimationType =
+    | "from-top"
+    | "from-bottom"
+    | "from-left"
+    | "from-right"
+    | "fade"
+    | "circle-from-top"
+    | "circle-from-bottom"
+    | "circle-from-left"
+    | "circle-from-right"
+    | "circle-from-right-top"
+    | "circle-from-right-bottom"
+    | "circle-from-left-top"
+    | "circle-from-left-bottom"
+    | "circle-from-center"
+
+  export let bgAnimeType: BackdropAnimationType = "circle-from-left-top"
+
   let rootel: HTMLElement
   let bodyel: HTMLElement
   let transitionWrapEl: HTMLDivElement
@@ -161,11 +179,12 @@
       <slot />
     </nav>
   </div>
-  <div class="drawer-backdrop" />
+  <div class={["drawer-backdrop", `--${bgAnimeType}`].join(" ")} />
 </div>
 
 <style>
   :global(html) {
+    overflow-x: hidden;
     overflow-y: scroll;
   }
 
@@ -207,10 +226,6 @@
   .drawer-backdrop {
     position: absolute;
     z-index: 9997;
-    /** 円の形 */
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
     background-color: #457703;
   }
 
@@ -219,32 +234,159 @@
   }
 
   /** 開閉アニメーション */
-
   .drawer[aria-expanded] {
-    transition-property: visibility;
-    transition-duration: 0.6s;
+    transition-property: visibility, opacity;
   }
   .drawer[aria-expanded] ~ .drawer-backdrop {
-    transition-property: transform;
     transition-duration: 0.6s;
   }
 
-  /** 開いているとき */
   .drawer[aria-expanded="true"] {
+    transition-duration: 1s;
+    transition-delay: 0.2s;
     visibility: visible;
+    opacity: 1;
   }
-  .drawer[aria-expanded="true"] ~ .drawer-backdrop {
-    transform: scale(50);
+  .drawer[aria-expanded="false"] {
+    transition-duration: 0s;
+    transition-delay: 0s;
+    visibility: hidden;
+    opacity: 0;
   }
 
-  /** 閉じているとき */
-  .drawer[aria-expanded="false"] {
-    visibility: hidden;
+  /** 長方形が広がる, fade（共通） */
+  .drawer[aria-expanded] ~ .drawer-backdrop[class*="--from"],
+  .drawer[aria-expanded] ~ .drawer-backdrop.--fade {
+    width: 100%;
+    height: 100vh;
   }
-  .drawer[aria-expanded="false"] ~ .drawer-backdrop {
-    /* 円の初期状態 */
-    transform: scale(0);
+
+  /** 上から広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--from-top {
+    transition-property: top;
     left: 0;
+  }
+  .drawer[aria-expanded="true"] ~ .drawer-backdrop.--from-top {
+    top: 0;
+  }
+  .drawer[aria-expanded="false"] ~ .drawer-backdrop.--from-top {
+    top: -120%;
+  }
+
+  /** 下から広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--from-bottom {
+    transition-property: bottom;
+    left: 0;
+  }
+  .drawer[aria-expanded="true"] ~ .drawer-backdrop.--from-bottom {
+    bottom: 0;
+  }
+  .drawer[aria-expanded="false"] ~ .drawer-backdrop.--from-bottom {
+    bottom: -120%;
+  }
+
+  /** 左から広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--from-left {
+    transition-property: left;
+    top: 0;
+  }
+  .drawer[aria-expanded="true"] ~ .drawer-backdrop.--from-left {
+    left: 0;
+  }
+  .drawer[aria-expanded="false"] ~ .drawer-backdrop.--from-left {
+    left: -120%;
+  }
+
+  /** 右から広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--from-right {
+    transition-property: right;
+    top: 0;
+  }
+  .drawer[aria-expanded="true"] ~ .drawer-backdrop.--from-right {
     right: 0;
+  }
+  .drawer[aria-expanded="false"] ~ .drawer-backdrop.--from-right {
+    right: -120%;
+  }
+
+  /** fade */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--fade {
+    transition-property: opacity;
+  }
+  .drawer[aria-expanded="true"] ~ .drawer-backdrop.--fade {
+    opacity: 1;
+  }
+  .drawer[aria-expanded="false"] ~ .drawer-backdrop.--fade {
+    opacity: 0;
+  }
+
+  /** 円が広がる（共通） */
+  .drawer[aria-expanded] ~ .drawer-backdrop[class*="--circle"] {
+    --circle-size: 100px;
+    --circle-half-size-negative: -50px;
+    transition-property: transform;
+    width: var(--circle-size);
+    height: var(--circle-size);
+    border-radius: 50%;
+  }
+  .drawer[aria-expanded="true"] ~ .drawer-backdrop[class*="--circle"] {
+    transform: scale(50);
+  }
+  .drawer[aria-expanded="false"] ~ .drawer-backdrop[class*="--circle"] {
+    transform: scale(0);
+  }
+
+  /** 上から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-top {
+    top: var(--circle-half-size-negative);
+    left: calc(50% + var(--circle-half-size-negative));
+  }
+
+  /** 下から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-bottom {
+    bottom: var(--circle-half-size-negative);
+    left: calc(50% + var(--circle-half-size-negative));
+  }
+
+  /** 右から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-right {
+    right: var(--circle-half-size-negative);
+    top: calc(50% + var(--circle-half-size-negative));
+  }
+
+  /** 左から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-left {
+    left: var(--circle-half-size-negative);
+    top: calc(50% + var(--circle-half-size-negative));
+  }
+
+  /** 右上から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-right-top {
+    right: var(--circle-half-size-negative);
+    top: var(--circle-half-size-negative);
+  }
+
+  /** 右下から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-right-bottom {
+    right: var(--circle-half-size-negative);
+    bottom: var(--circle-half-size-negative);
+  }
+
+  /** 左上から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-left-top {
+    left: var(--circle-half-size-negative);
+    top: var(--circle-half-size-negative);
+  }
+
+  /** 左下から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-left-bottom {
+    left: var(--circle-half-size-negative);
+    bottom: var(--circle-half-size-negative);
+  }
+
+  /** 中央から円が広がる */
+  .drawer[aria-expanded] ~ .drawer-backdrop.--circle-from-center {
+    left: calc(50% + var(--circle-half-size-negative));
+    top: calc(50% + var(--circle-half-size-negative));
   }
 </style>
