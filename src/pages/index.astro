@@ -5,6 +5,7 @@ import ArrowLink from "@/components/arrow-link.astro"
 import Dialog from "@/components/dialog.svelte"
 import FluidImage from "@/components/fluid-image.astro"
 import HLineHeading from "@/components/horizontal-line-heading.astro"
+import TreeNav from "@/components/tree-nav/index.svelte"
 ---
 
 <html lang="en">
@@ -19,6 +20,10 @@ import HLineHeading from "@/components/horizontal-line-heading.astro"
     <section>
       <h1>SampleSite - GREEN MARKET</h1>
       <a href="/green-market">ページへ移動</a>
+    </section>
+    <section>
+      <h1>Tree View</h1>
+      <TreeNav client:load />
     </section>
     <section>
       <h1>::beforeで三角形をつくる</h1>

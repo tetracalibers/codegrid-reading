@@ -1,18 +1,11 @@
 ---
-import DrawerNav from "@/components/green-market/drawer-nav/index.svelte"
+import SpGlobalNav from "./sp-global-nav/index.svelte"
 
 const { ...props } = Astro.props
 ---
 
 <header class:list={[props.class, "gm-header"]}>
-  <DrawerNav client:load bgAnimeType={"circle-from-left-top"}>
-    <ul>
-      <li><a href="#">花束・ブーケ</a></li>
-      <li><a href="#">アレンジメント</a></li>
-      <li><a href="#">ブリザードフラワー</a></li>
-      <li><a href="#">季節限定</a></li>
-    </ul>
-  </DrawerNav>
+  <SpGlobalNav client:load />
   <h1 class="gm-header-title">
     <a href="/green-market" class="gm-header-title__link">
       <img
