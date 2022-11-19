@@ -109,13 +109,6 @@ export class Tree {
     siblings.forEach(node => node.setAttribute("aria-expanded", "true"))
   }
 
-  showTreeitem = (treeitem: HTMLElement) => {
-    let parent = this.getImmediateParentTreeitem(treeitem)
-    if (!parent) return
-    this.expandTreeitem(parent)
-    this.showTreeitem(parent)
-  }
-
   isVisible = (treeitem: HTMLElement) => {
     if (this.isInSubtree(treeitem)) {
       const parent = this.getImmediateParentTreeitem(treeitem)
