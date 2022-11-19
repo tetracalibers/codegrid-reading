@@ -55,10 +55,6 @@ export class Tree {
     this.isInSubtree(parent)
   }
 
-  isExpandable = (treeitem: HTMLElement) => {
-    return treeitem.hasAttribute("aria-expanded")
-  }
-
   isExpanded = (treeitem: HTMLElement) => {
     return treeitem.getAttribute("aria-expanded") === "true"
   }
@@ -183,26 +179,27 @@ export class Tree {
     for (const el of searchTargets) {
       if (match(el.textContent)) {
         matched = el
+        this.setFocusToTreeitem(matched)
+        return
       }
     }
     // まだ見つかっていなければ、前半も探す
-    if (startIdx !== 0 && matched === undefined) {
+    if (startIdx !== 0) {
       searchTargets = visibles.slice(0, startIdx)
       for (const el of searchTargets) {
         if (match(el.textContent)) {
           matched = el
+          this.setFocusToTreeitem(matched)
+          return
         }
       }
     }
-    // matchしたtreeitemにfocus
-    if (!matched) return
-    this.setFocusToTreeitem(matched)
   }
 
   onClickTreeitem = (e: MouseEvent | TouchEvent) => {
     const el = e.target as HTMLElement
     if (el.getAttribute("role") !== "treeitem") return
-    const isOpen = this.isExpandable(el) && this.isExpanded(el)
+    const isOpen = this.isExpanded(el)
     isOpen ? this.collapseTreeitem(el) : this.expandTreeitem(el)
     e.stopPropagation()
     e.preventDefault()
@@ -227,13 +224,13 @@ export class Tree {
         break
       case "Right":
       case "ArrowRight":
-        this.isExpandable(el) && this.isExpanded(el)
+        this.isExpanded(el)
           ? this.setFocusToNextTreeitem(el)
           : this.expandTreeitem(el)
         break
       case "Left":
       case "ArrowLeft":
-        this.isExpandable(el) && this.isExpanded(el)
+        this.isExpanded(el)
           ? this.collapseTreeitem(el)
           : this.isInSubtree(el) && this.setFocusToParentTreeitem(el)
         break
