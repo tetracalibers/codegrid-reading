@@ -27,6 +27,8 @@ export class Tree {
 
   constructor(treeEl: HTMLElement) {
     this.treeitems = getChildrenArray(treeEl, '[role="treeitem"]')
+    // 最初のtreeitemのみfocus可能に
+    this.treeitems[0].setAttribute("tabindex", "0")
   }
 
   isTreeitemWithSubtree = (treeitem: HTMLElement) => {
@@ -53,6 +55,10 @@ export class Tree {
     }
     // まだtreeのrootにもsubtreeのrootにも達していなければ、さらに親を調べる
     this.isInSubtree(parent)
+  }
+
+  isExpandable = (treeitem: HTMLElement) => {
+    return treeitem.hasAttribute("aria-expanded")
   }
 
   isExpanded = (treeitem: HTMLElement) => {
@@ -206,6 +212,7 @@ export class Tree {
   onClickTreeitem = (e: MouseEvent | TouchEvent) => {
     const el = e.target as HTMLElement
     if (el.getAttribute("role") !== "treeitem") return
+    if (!this.isExpandable(el)) return
     this.isExpanded(el) ? this.collapseTreeitem(el) : this.expandTreeitem(el)
     e.stopPropagation()
     e.preventDefault()

@@ -8,6 +8,7 @@
     role="treeitem"
     aria-expanded="false"
     aria-owns={`${subTreeTitle}-subtree`}
+    tabindex="-1"
   >
     {subTreeTitle}
   </button>
