@@ -211,10 +211,16 @@ export class Tree {
 
   onClickTreeitem = (e: MouseEvent | TouchEvent) => {
     const el = e.target as HTMLElement
+    // treeitemで発火したイベントでなければ無視
     if (el.getAttribute("role") !== "treeitem") return
+    // 開けないtreeitemをクリックした場合、何もせずデフォルト挙動に任せる
     if (!this.isExpandable(el)) return
+
+    // 閉じているなら開く、開いているなら閉じる
     this.isExpanded(el) ? this.collapseTreeitem(el) : this.expandTreeitem(el)
+    // ここでイベント消化（伝播させない）
     e.stopPropagation()
+    // デフォルトアクション停止
     e.preventDefault()
   }
 
