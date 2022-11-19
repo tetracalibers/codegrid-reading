@@ -64,19 +64,26 @@ export class Tree {
     return ownsId ? document.getElementById(ownsId) : undefined
   }
 
+  // ul > li > treeitemという構成で、ulを取得
+  getImmediateRoot = (treeitem: HTMLElement) => {
+    const li = getParentEl(treeitem)
+    const ul = getParentEl(li)
+    return ul
+  }
+
   // 直近の親となるtreeitem
   getImmediateParentTreeitem = (treeitem: HTMLElement) => {
-    let parent = getParentEl(getParentEl(treeitem))
-    // role="tree"が直近の親なら、親となるtreeitemは存在しない
-    if (this.isTreeRoot(parent)) {
+    const ul = this.getImmediateRoot(treeitem)
+    // ul[role="tree"]なら、親となるtreeitemは存在しない
+    if (this.isTreeRoot(ul)) {
       return false
     }
-    // role="group"が親なら、その前のrole="treeitem"が直近
-    if (this.isSubtreeGroupRoot(parent)) {
-      const prevEl = getPrevEl(parent)
+    // ul[role="group"]なら、その前のrole="treeitem"が直近
+    if (this.isSubtreeGroupRoot(ul)) {
+      const prevEl = getPrevEl(ul)
       return this.isTreeitemWithSubtree(prevEl) ? prevEl : false
     }
-    this.getImmediateParentTreeitem(parent)
+    this.getImmediateParentTreeitem(ul)
   }
 
   isExistSubtreeGroup = (treeitem: HTMLElement) => {
@@ -99,9 +106,9 @@ export class Tree {
   }
 
   expandAllSiblingTreeitems = (treeitem: HTMLElement) => {
-    const parent = getParentEl(getParentEl(treeitem))
-    if (!parent) return
-    const siblings = parent.querySelectorAll(":scope > li > [role='treeitem']")
+    const ul = this.getImmediateRoot(treeitem)
+    if (!ul) return
+    const siblings = ul.querySelectorAll(":scope > li > [role='treeitem']")
     siblings.forEach(node => node.setAttribute("aria-expanded", "true"))
   }
 
