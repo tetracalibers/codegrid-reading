@@ -206,8 +206,7 @@ export class Tree {
   onClickTreeitem = (e: MouseEvent | TouchEvent) => {
     const el = e.target as HTMLElement
     if (el.getAttribute("role") !== "treeitem") return
-    const isOpen = this.isExpanded(el)
-    isOpen ? this.collapseTreeitem(el) : this.expandTreeitem(el)
+    this.isExpanded(el) ? this.collapseTreeitem(el) : this.expandTreeitem(el)
     e.stopPropagation()
     e.preventDefault()
   }
