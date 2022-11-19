@@ -42,7 +42,7 @@ export class Tree {
   }
 
   isInSubtree = (treeitem: HTMLElement) => {
-    let parent = this.getImmediateParentTreeitem(treeitem)
+    const parent = this.getImmediateParentTreeitem(treeitem)
     // 親がtree全体のrootなら、自分はsubtree内ではない直下node
     if (!parent || this.isTreeRoot(parent)) {
       return false
